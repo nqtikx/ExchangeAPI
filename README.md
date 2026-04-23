@@ -2,63 +2,74 @@
 
 ## Process Description
 
-![ExchangeFlow](exchangeApiFlow.drawio.svg)
+![ExchangeFlow](.gitbook/assets/exchangeApiFlow.drawio.svg)
 
 ## Content
-- **[Assets](#assets-request)**
-- **[Providers](#providers-request)**
-- **[Limits](#limit-request)**
-- **[Quote](#quote-request)**
-- **[Buy](#buy-request---onramp)**
-- **[Sell](#sell-request---offramp)**
-- **[Order Status](#order-status-request)**
 
----
+* [**Assets**](./#assets-request)
+* [**Providers**](./#providers-request)
+* [**Limits**](./#limit-request)
+* [**Quote**](./#quote-request)
+* [**Buy**](./#buy-request---onramp)
+* [**Sell**](./#sell-request---offramp)
+* [**Order Status**](./#order-status-request)
+
+***
 
 ### Assets Request
 
 #### POST /api/v2/exchange/merchant/assets
+
 > Currencies available for exchange.
 
 **Parameters:**
-- **clientId** - *optional*, string(255), registered client ID
+
+* **clientId** - _optional_, string(255), registered client ID
 
 **Response:**
-- **cryptoAssets** - [`CryptoAsset`](#common-interfaces), available cryptocurrencies
-- **fiatAssets** - [`FiatAsset`](#common-interfaces), available fiat currencies
 
----
+* **cryptoAssets** - [`CryptoAsset`](./#common-interfaces), available cryptocurrencies
+* **fiatAssets** - [`FiatAsset`](./#common-interfaces), available fiat currencies
+
+***
 
 ### Providers Request
 
 #### POST /api/v2/exchange/merchant/payment/provider
+
 > List of available payment methods with their configurations.
 
 **Parameters:**
-- **clientId** - Optional, string(255), registered client ID
+
+* **clientId** - Optional, string(255), registered client ID
 
 **Response:**
-- **Array** - [PaymentProvider[]](#payment-provider-interfaces)
 
----
+* **Array** - [PaymentProvider\[\]](./#payment-provider-interfaces)
+
+***
 
 ### Limit Request
 
 #### POST /api/v2/exchange/merchant/limit
+
 > Client's current limits for the selected currency pair.
 
 **Parameters:**
-- **clientId** - string(255)
-- **paymentMethod** - PaymentProviderId
-- **fromAsset** - LimitAsset
-- **toAsset** - LimitAsset
+
+* **clientId** - string(255)
+* **paymentMethod** - PaymentProviderId
+* **fromAsset** - LimitAsset
+* **toAsset** - LimitAsset
 
 **Response:**
-- **asset** - LimitAsset, a copy of `fromAsset`
-- **min** - int, minimum amount for exchange
-- **max** - int, maximum amount for exchange
+
+* **asset** - LimitAsset, a copy of `fromAsset`
+* **min** - int, minimum amount for exchange
+* **max** - int, maximum amount for exchange
 
 **Examples:**
+
 ```
 // OnRamp example
 {
@@ -86,30 +97,34 @@
   }
 }
 ```
----
+
+***
 
 ### Quote Request
 
 #### POST /api/v2/exchange/merchant/quote
+
 > Request for deal conditions. Quote is valid for 30 seconds - must be requested continuously. It's not allowed to create an order using an expired quote. The response contains current exchange conditions and a `quoteId`.
 
 **Parameters:**
-- `clientId` - *optional*, string(255), registered client ID
-- `paymentMethod` - *optional*, PaymentProviderId, which provider to use
-- `paymentMethodToken` - *optional*, string(255), card token or any GUID (for custom integrations)
-- `fromAsset` - QuoteAsset, asset to exchange from
-- `toAsset` - QuoteAsset, asset to exchange to
-- `destinationCryptoAddress` - *optional*, string — **OnRamp only**, more accurate network fee estimation
-- `comment` - *optional*, string — for **TON OnRamp** transactions
+
+* `clientId` - _optional_, string(255), registered client ID
+* `paymentMethod` - _optional_, PaymentProviderId, which provider to use
+* `paymentMethodToken` - _optional_, string(255), card token or any GUID (for custom integrations)
+* `fromAsset` - QuoteAsset, asset to exchange from
+* `toAsset` - QuoteAsset, asset to exchange to
+* `destinationCryptoAddress` - _optional_, string — **OnRamp only**, more accurate network fee estimation
+* `comment` - _optional_, string — for **TON OnRamp** transactions
 
 **Response:**
-- `quoteId` - string(255), **deal conditions ID**, used in buy/sell requests
-- `fromAsset` - QuoteAsset, calculated input amount
-- `toAsset` - QuoteAsset, calculated output amount
-- `rate` - double, final rate including all fees
-- `plainRate` - double, rate without any fees
-- `fee` - QuoteFee, fee breakdown
-- `expirationDate` - string(255), expiration timestamp (now + 30s)
+
+* `quoteId` - string(255), **deal conditions ID**, used in buy/sell requests
+* `fromAsset` - QuoteAsset, calculated input amount
+* `toAsset` - QuoteAsset, calculated output amount
+* `rate` - double, final rate including all fees
+* `plainRate` - double, rate without any fees
+* `fee` - QuoteFee, fee breakdown
+* `expirationDate` - string(255), expiration timestamp (now + 30s)
 
 **Example Requests:**
 
@@ -146,75 +161,86 @@
   }
 }
 ```
----
+
+***
+
 ### Buy Request – OnRamp
 
 #### GET /api/v2/exchange/merchant/buy
+
 > Request to create an order to buy cryptocurrency using fiat. **OnRamp** operation.
 
 **Parameters:**
-- `quoteId` - string(255), ID of the deal conditions
+
+* `quoteId` - string(255), ID of the deal conditions
 
 **Response:**
-- `id` - string(255), order ID
-- `type` - `"BUY"`, order type
-- `status` - OrderStatus
-- `fiatPaymentLink` - string, 3DS link for card integration
-- `creationDate` - string(255)
-- `modificationDate` - string(255)
-- `expiresAtDate` - string(255)
 
----
+* `id` - string(255), order ID
+* `type` - `"BUY"`, order type
+* `status` - OrderStatus
+* `fiatPaymentLink` - string, 3DS link for card integration
+* `creationDate` - string(255)
+* `modificationDate` - string(255)
+* `expiresAtDate` - string(255)
+
+***
 
 ### Sell Request – OffRamp
 
 #### POST /api/v2/exchange/merchant/sell
+
 > Request to create an order to sell cryptocurrency into fiat. **OffRamp** operation.
 
 **Parameters:**
-- `quoteId` - string(255), ID of the deal conditions
-- `sourceAddress` - *optional* string(255), crypto address from which the funds will be sent (used to pre-check the wallet)
+
+* `quoteId` - string(255), ID of the deal conditions
+* `sourceAddress` - _optional_ string(255), crypto address from which the funds will be sent (used to pre-check the wallet)
 
 **Response:**
-- `id` - string(255), order ID
-- `type` - `"SELL"`, order type
-- `status` - OrderStatus
-- `depositCryptoAddress` - string, crypto address where client must send the funds
-- `creationDate` - string(255)
-- `modificationDate` - string(255)
-- `expiresAtDate` - string(255)
 
----
+* `id` - string(255), order ID
+* `type` - `"SELL"`, order type
+* `status` - OrderStatus
+* `depositCryptoAddress` - string, crypto address where client must send the funds
+* `creationDate` - string(255)
+* `modificationDate` - string(255)
+* `expiresAtDate` - string(255)
+
+***
 
 ### Order Status Request
 
 #### GET /api/v2/exchange/merchant/order
+
 > Request to get the status of a specific **OnRamp** or **OffRamp** order.
 
 **Parameters:**
-- `orderId` - string(255), order ID
+
+* `orderId` - string(255), order ID
 
 **Response:**
-- `id` - string(255)
-- `number` - int, order number
-- `status` - OrderStatus
-- `exchangeOperation` - ExchangeOperation, exchange conditions
-- `cryptoTransaction` - CryptoTransaction
-- `fiatTransaction` - FiatTransaction
-- `client` - OrderClient
-- `creationDate` - string, UTC
-- `modificationDate` - string, UTC
-- `expiresAtDate` - string, UTC
-- `completionDate` - string, UTC
-- `serverDate` - string, UTC (internal info)
-- `exchangeType` - `"BUY"` | `"SELL"`
-- `operationType` - `"CRYPTO_TO_FIAT"` | `"FIAT_TO_CRYPTO"`
-- `orderType` - `"DEFAULT"` (reserved)
-- `resultMessage` - *optional* string, service message
-- `submitByResident` - boolean, whether the client is a resident of Belarus
-- `promoCodeDetails` - string, info on promo code used
 
----
+* `id` - string(255)
+* `number` - int, order number
+* `status` - OrderStatus
+* `exchangeOperation` - ExchangeOperation, exchange conditions
+* `cryptoTransaction` - CryptoTransaction
+* `fiatTransaction` - FiatTransaction
+* `client` - OrderClient
+* `creationDate` - string, UTC
+* `modificationDate` - string, UTC
+* `expiresAtDate` - string, UTC
+* `completionDate` - string, UTC
+* `serverDate` - string, UTC (internal info)
+* `exchangeType` - `"BUY"` | `"SELL"`
+* `operationType` - `"CRYPTO_TO_FIAT"` | `"FIAT_TO_CRYPTO"`
+* `orderType` - `"DEFAULT"` (reserved)
+* `resultMessage` - _optional_ string, service message
+* `submitByResident` - boolean, whether the client is a resident of Belarus
+* `promoCodeDetails` - string, info on promo code used
+
+***
 
 ### Common Interfaces
 

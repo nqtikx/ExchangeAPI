@@ -1,54 +1,56 @@
 # ASSIST
 
+## ASSIST
+
 ASSIST is a payment provider of BelarusBank. To use it, client need to bind their card
 
-## Available currencies:
+### Available currencies:
 
-- BYN
-- RUB
-- USD
-- EUR
+* BYN
+* RUB
+* USD
+* EUR
 
-## Available Bank Card By Region:
+### Available Bank Card By Region:
 
-- Belarus
-- Azerbaijan
-- Armenia
-- Kazakhstan
-- Kyrgyzstan
-- Moldova
-- Tajikistan
-- Turkmenistan
-- Uzbekistan
-- Georgia
+* Belarus
+* Azerbaijan
+* Armenia
+* Kazakhstan
+* Kyrgyzstan
+* Moldova
+* Tajikistan
+* Turkmenistan
+* Uzbekistan
+* Georgia
 
-## Directions & Commission:
+### Directions & Commission:
 
- For BelarusBank cards:
+For BelarusBank cards:
 
-- Buy Crypto 3,0 %
-- Sell Sell 2,5 %
+* Buy Crypto 3,0 %
+* Sell Sell 2,5 %
 
- For other bank  cards:
+For other bank cards:
 
-- Buy Crypto 3,5-4,9 %
-- Sell Sell 3,0-4,9 %
+* Buy Crypto 3,5-4,9 %
+* Sell Sell 3,0-4,9 %
 
-## Flow for binding card:
+### Flow for binding card:
 
-![image.png](ASSIST_image/image.png)
+![image.png](<.gitbook/assets/image (2).png>)
 
-# First step
+## First step
 
 Verify that the payment provider is available
 
-### POST api/v2/exchange/merchant/payment/provider
+#### POST api/v2/exchange/merchant/payment/provider
 
-### Request Header:
+#### Request Header:
 
-x-api-key 
+x-api-key
 
-### Request Body:
+#### Request Body:
 
 ```jsx
 {
@@ -58,7 +60,7 @@ x-api-key
 }
 ```
 
-### Response:
+#### Response:
 
 ```jsx
 {
@@ -98,21 +100,21 @@ x-api-key
 }
 ```
 
-It is sufficient to verify that the payment provider is available via the id field.  id = ASSIST 
+It is sufficient to verify that the payment provider is available via the id field. id = ASSIST
 
-# Second step
+## Second step
 
 Generate link to bind client card
 
-### POST api/v2/exchange/merchant/payment/card/bind
+#### POST api/v2/exchange/merchant/payment/card/bind
 
-### Request Header:
+#### Request Header:
 
-x-api-key 
+x-api-key
 
-### Request Body:
+#### Request Body:
 
-`returnUrl` - Link to the resource where the client should be redirected after binding the card 
+`returnUrl` - Link to the resource where the client should be redirected after binding the card
 
 ```jsx
 {
@@ -122,7 +124,7 @@ x-api-key
 }
 ```
 
-### Response:
+#### Response:
 
 ```jsx
 {
@@ -130,31 +132,34 @@ x-api-key
 }
 ```
 
-# Third step
+## Third step
 
-Open link for the client to bind their card 
+Open link for the client to bind their card
 
-Test card data:
-Number: 4111 1111 1111 111
-Expiration time: 12/30
-CVV: 123
+Test card data: Number: 4111 1111 1111 111 Expiration time: 12/30 CVV: 123
 
-                                                             Enter your card details 
+```
+                                                         Enter your card details 
+```
 
-![Screenshot 2026-03-04 at 17.24.30.png](ASSIST_image/assist1.png)
+![Screenshot 2026-03-04 at 17.24.30.png](.gitbook/assets/assist1.png)
 
-                    3ds will be automatically substituted. You must click on the “Confirm” button
+```
+                3ds will be automatically substituted. You must click on the “Confirm” button
+```
 
-![Screenshot 2026-03-04 at 17.24.36.png](ASSIST_image/assist2.png)
+![Screenshot 2026-03-04 at 17.24.36.png](.gitbook/assets/assist2.png)
 
-              After completing the card binding, you will be redirected to the returnUrl you specified
+```
+          After completing the card binding, you will be redirected to the returnUrl you specified
+```
 
-  How can I find out the result of a card binding?  
+How can I find out the result of a card binding?\
 Use webhooks from Whitebird or use the request from step four
 
-### There are three webhooks from Wthitebird:
+#### There are three webhooks from Wthitebird:
 
-### client.payment.method.binding
+#### client.payment.method.binding
 
 Сlient initiated card binding
 
@@ -169,7 +174,7 @@ Use webhooks from Whitebird or use the request from step four
 }
 ```
 
-### client.payment.method.bound
+#### client.payment.method.bound
 
 Сlient's card was successfully bound
 
@@ -184,7 +189,7 @@ Use webhooks from Whitebird or use the request from step four
 }
 ```
 
-### client.payment.method.failed
+#### client.payment.method.failed
 
 Сlient did not bind the card or the binding was declined by the bank
 
@@ -203,17 +208,17 @@ Use webhooks from Whitebird or use the request from step four
 
 If the client has successfully bound their card, you can get the card id in Whitebird as the paymentToken value
 
-# Fourth step
+## Fourth step
 
-Get available payment methods for the client 
+Get available payment methods for the client
 
-### POST api/v2/exchange/merchant/payment/method
+#### POST api/v2/exchange/merchant/payment/method
 
-### Request Header:
+#### Request Header:
 
-x-api-key 
+x-api-key
 
-### Request Body:
+#### Request Body:
 
 ```jsx
 {
@@ -223,7 +228,7 @@ x-api-key
 }
 ```
 
-### Response:
+#### Response:
 
 ```jsx
 [
