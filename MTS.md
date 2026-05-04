@@ -108,7 +108,10 @@ Test card data: Choose country: Russia, Kazakhstan, Kyrgyzstan, Uzbekistan Numbe
                                                             Enter card details
 ```
 
-![](.gitbook/assets/image.png)\
+<figure><img src=".gitbook/assets/image (4).png" alt="" width="563"><figcaption></figcaption></figure>
+
+\
+\
 How can I find out the result of a card binding?\
 Use webhooks from Whitebird or use the request from step four
 
