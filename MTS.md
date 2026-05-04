@@ -1,7 +1,5 @@
 # MTS
 
-## MTS
-
 ### Available currencies:
 
 * RUB
