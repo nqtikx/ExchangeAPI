@@ -1,7 +1,5 @@
 # SBER
 
-## SBER
-
 SBER is a payment provider for RUB operations. In merchant configuration it can be routed via CA-type payment system.
 
 ### Available currencies:
