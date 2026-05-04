@@ -1,6 +1,6 @@
 # Table of contents
 
-* [WhiteBird API Guide](README.md)
+* [The list of currently supported payment providers](The list of currently supported payment providers.md)
 * [ALFA](ALFA.md)
 * [ASSIST](ASSIST.md)
 * [CARUSELL](CARUSELL.md)
