@@ -2,32 +2,32 @@
 
 CARUSELL is a payment provider for СБП (Faster Payments System). The payment provider does not require card to be bound, payment is made in the bank's app through which the payment will be processed. Whitebird's connection with the client's bank is via a phone number. A phone number is required to make a payment
 
-## Available currencies:
+### Available currencies:
 
-- RUB
+* RUB
 
-## Available Bank Card By Region:
+### Available Bank Card By Region:
 
-- Russia
+* Russia
 
-## Directions & Commission:
+### Directions & Commission:
 
-- Buy Crypto 2,5 %
-- Sell Sell 2 %
+* Buy Crypto 2,5 %
+* Sell Sell 2 %
 
-# Buy Crypto Flow:
+## Buy Crypto Flow:
 
-## First step
+### First step
 
-Get available payment methods for the client 
+Get available payment methods for the client
 
-### POST api/v2/exchange/merchant/payment/method
+#### POST api/v2/exchange/merchant/payment/method
 
-### Request Header:
+#### Request Header:
 
-x-api-key 
+x-api-key
 
-### Request Body:
+#### Request Body:
 
 ```jsx
 {
@@ -37,7 +37,7 @@ x-api-key
 }
 ```
 
-### Response:
+#### Response:
 
 ```jsx
 [
@@ -50,17 +50,17 @@ x-api-key
 ]
 ```
 
-## Second step
+### Second step
 
 To create a quota, specify a random uuid in the paymentMethodToken field
 
-### POST api/v2/exchange/merchant/quote
+#### POST api/v2/exchange/merchant/quote
 
-### Request Header:
+#### Request Header:
 
-x-api-key 
+x-api-key
 
-### Request Body:
+#### Request Body:
 
 ```jsx
 {
@@ -79,7 +79,7 @@ x-api-key
 }
 ```
 
-### Response:
+#### Response:
 
 ```jsx
 {
@@ -105,17 +105,17 @@ x-api-key
 }
 ```
 
-## Third step
+### Third step
 
 Create an order specifying returnUrl and failUrl to ensure the client is redirected back to the website after payment
 
-### POST api/v2/exchange/merchant/buy?quoteId=27690c04-e344-4d31-81aec58296ba6ddc&returnUrl=https://www.google.com/&failUrl=https://www.google.com/
+#### POST api/v2/exchange/merchant/buy?quoteId=27690c04-e344-4d31-81aec58296ba6ddc\&returnUrl=https://www.google.com/\&failUrl=https://www.google.com/
 
-### Request Header:
+#### Request Header:
 
-x-api-key 
+x-api-key
 
-### Response:
+#### Response:
 
 ```jsx
 {
@@ -128,23 +128,23 @@ x-api-key
 }
 ```
 
-## Fourth step
+### Fourth step
 
-Open the link where the client selects the bank through which the payment will be made and complete the payment. 
+Open the link where the client selects the bank through which the payment will be made and complete the payment.
 
-# Sell Crypto Flow:
+## Sell Crypto Flow:
 
-## First step
+### First step
 
-Get available payment methods for the client 
+Get available payment methods for the client
 
-### POST api/v2/exchange/merchant/payment/method
+#### POST api/v2/exchange/merchant/payment/method
 
-### Request Header:
+#### Request Header:
 
-x-api-key 
+x-api-key
 
-### Request Body:
+#### Request Body:
 
 ```jsx
 {
@@ -154,7 +154,7 @@ x-api-key
 }
 ```
 
-### Response:
+#### Response:
 
 ```jsx
 [
@@ -167,17 +167,17 @@ x-api-key
 ]
 ```
 
-## Second step
+### Second step
 
 To create a quota, specify a random uuid in the paymentMethodToken field
 
-### POST api/v2/exchange/merchant/quote
+#### POST api/v2/exchange/merchant/quote
 
-### Request Header:
+#### Request Header:
 
-x-api-key 
+x-api-key
 
-### Request Body:
+#### Request Body:
 
 ```jsx
 {
@@ -196,7 +196,7 @@ x-api-key
 }
 ```
 
-### Response:
+#### Response:
 
 ```jsx
 {
@@ -222,17 +222,17 @@ x-api-key
 }
 ```
 
-## Third step
+### Third step
 
-Get the list of available banks for transfers via **CARUSELL**
+Get the list of available banks for transfers via **CARUSELL**
 
-### GET https://carusell-service.dev.wbdevel.net/api/v1/bank
+#### GET https://carusell-service.dev.wbdevel.net/api/v1/bank
 
-### Request Header:
+#### Request Header:
 
-x-api-key 
+x-api-key
 
-### Response:
+#### Response:
 
 ```jsx
 {
@@ -248,19 +248,19 @@ x-api-key
 ...
 ```
 
-The client chooses the bank to which the payment will be made 
+The client chooses the bank to which the payment will be made
 
-## Fourth step
+### Fourth step
 
- Create an order with the bankIdentifier selected by the client
+Create an order with the bankIdentifier selected by the client
 
-### POST /api/v2/exchange/merchant/sell?quoteId=27690c04-e344-4d31-81ae-c58296ba6ddc&bankIdentifier=100000000118
+#### POST /api/v2/exchange/merchant/sell?quoteId=27690c04-e344-4d31-81ae-c58296ba6ddc\&bankIdentifier=100000000118
 
-### Request Header:
+#### Request Header:
 
-x-api-key 
+x-api-key
 
-### Response:
+#### Response:
 
 ```jsx
 {
@@ -275,9 +275,9 @@ x-api-key
 
 For the test environment, it does not matter which bank is selected (bankIdentifier) — the payment will be processed successfully in any case.
 
-## **CARUSELL** also has an anti-fraud check. It is performed automatically:
+### **CARUSELL** also has an anti-fraud check. It is performed automatically:
 
-- At the moment of order creation for the crypto-to-fiat flow
-- At the moment of order execution for the fiat-to-crypto flow
+* At the moment of order creation for the crypto-to-fiat flow
+* At the moment of order execution for the fiat-to-crypto flow
 
 If an order fails to be created or returns an error at any stage, there is a possibility that the anti-fraud system has declined the transaction.
