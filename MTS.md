@@ -15,8 +15,6 @@
 
 ### Flow for binding card:
 
-![image.png](../.gitbook/image.png)
-
 ### First step
 
 Verify that the payment provider is available
@@ -110,6 +108,7 @@ Test card data: Choose country: Russia, Kazakhstan, Kyrgyzstan, Uzbekistan Numbe
                                                             Enter card details
 ```
 
+![](.gitbook/assets/image.png)\
 How can I find out the result of a card binding?\
 Use webhooks from Whitebird or use the request from step four
 
@@ -334,7 +333,7 @@ x-api-key
 
 Create an order specifying `returnUrl` and `failUrl` (optional) after quote creation
 
-#### GET api/v2/exchange/merchant/buy?quoteId={{quoteId}}\&returnUrl=https://www.google.com\&failUrl=https://www.google.com
+#### GET api/v2/exchange/merchant/buy?quoteId=\{{quoteId\}}\&returnUrl=https://www.google.com\&failUrl=https://www.google.com
 
 #### Request Header:
 
@@ -354,10 +353,10 @@ x-api-key
 
 ### Fifth step
 
-Take `fiatTransaction.orderIdentity` from the order response.  
+Take `fiatTransaction.orderIdentity` from the order response.\
 This value is the payment reference number that the user enters in the bank app to confirm the transfer.
 
-#### GET https://api.dev.wbdevel.net/api/v2/exchange/merchant/order?orderId={{orderId}}
+#### GET https://api.dev.wbdevel.net/api/v2/exchange/merchant/order?orderId=\{{orderId\}}
 
 #### Request Header:
 
@@ -442,9 +441,11 @@ In production flow, after order creation the client must complete payment in the
 
 **“Transfers abroad” → “Belarus” → “RUB” → Enter amount → “WhiteBird” → Enter order number → Confirm transfer.**
 
+<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+
 ### **Check order status**
 
-#### GET /api/v2/exchange/merchant/order?orderId={{orderId}}
+#### GET /api/v2/exchange/merchant/order?orderId=\{{orderId\}}
 
 #### Request Header:
 

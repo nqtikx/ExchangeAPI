@@ -36,7 +36,7 @@ For other bank cards:
 
 ### Flow for binding card:
 
-![image.png](<.gitbook/assets/image (2).png>)
+![image.png](<.gitbook/assets/image (1).png>)
 
 ## First step
 
