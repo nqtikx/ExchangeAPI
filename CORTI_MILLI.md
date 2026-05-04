@@ -1,33 +1,33 @@
-# CORTI_MILLI
+# CORTI\_MILLI
 
-CORTI_MILLI is a payment provider for bank transfer processing in RUB. The payment provider does not require card binding in Whitebird. Payment is processed through the provider banking flow after order creation.
+CORTI\_MILLI is a payment provider for bank transfer processing in RUB. The payment provider does not require card binding in Whitebird. Payment is processed through the provider banking flow after order creation.
 
-## Available currencies:
+### Available currencies:
 
-- RUB
+* RUB
 
-## Available Bank Card By Region:
+### Available Bank Card By Region:
 
-- Russia
+* Russia
 
-## Directions & Commission:
+### Directions & Commission:
 
-- Buy Crypto - not available in current configuration
-- Sell Crypto 2 %
+* Buy Crypto - not available in current configuration
+* Sell Crypto 2 %
 
-# Sell Crypto Flow:
+## Sell Crypto Flow:
 
-## First step
+### First step
 
-Get available payment methods for the client 
+Get available payment methods for the client
 
-### POST api/v2/exchange/merchant/payment/method
+#### POST api/v2/exchange/merchant/payment/method
 
-### Request Header:
+#### Request Header:
 
-x-api-key 
+x-api-key
 
-### Request Body:
+#### Request Body:
 
 ```jsx
 {
@@ -37,7 +37,7 @@ x-api-key
 }
 ```
 
-### Response:
+#### Response:
 
 ```jsx
 [
@@ -50,19 +50,19 @@ x-api-key
 ]
 ```
 
-If `CORTI_MILLI` is not returned (or returned with non-`ENABLED` status), `SELL` via CORTI_MILLI is not available for the current client/merchant/environment.
+If `CORTI_MILLI` is not returned (or returned with non-`ENABLED` status), `SELL` via CORTI\_MILLI is not available for the current client/merchant/environment.
 
-## Second step
+### Second step
 
-Create a quote for the selected CORTI_MILLI payment method
+Create a quote for the selected CORTI\_MILLI payment method
 
-### POST api/v2/exchange/merchant/quote
+#### POST api/v2/exchange/merchant/quote
 
-### Request Header:
+#### Request Header:
 
-x-api-key 
+x-api-key
 
-### Request Body:
+#### Request Body:
 
 ```jsx
 {
@@ -81,7 +81,7 @@ x-api-key
 }
 ```
 
-### Response:
+#### Response:
 
 ```jsx
 {
@@ -107,17 +107,17 @@ x-api-key
 }
 ```
 
-## Third step
+### Third step
 
 Create a sell order using the created quote.
 
-### GET api/v2/exchange/merchant/sell?quoteId=420d72d9-715c-41d9-93e8-1d1cb20924e3
+#### GET api/v2/exchange/merchant/sell?quoteId=420d72d9-715c-41d9-93e8-1d1cb20924e3
 
-### Request Header:
+#### Request Header:
 
-x-api-key 
+x-api-key
 
-### Response:
+#### Response:
 
 ```jsx
 {
@@ -132,17 +132,17 @@ x-api-key
 }
 ```
 
-## Fourth step
+### Fourth step
 
- Get order details and provide transfer instructions to the client.
+Get order details and provide transfer instructions to the client.
 
-### GET /api/v2/exchange/merchant/order?orderId=c711b777-5d13-4156-a57d-456cc307626b
+#### GET /api/v2/exchange/merchant/order?orderId=c711b777-5d13-4156-a57d-456cc307626b
 
-### Request Header:
+#### Request Header:
 
-x-api-key 
+x-api-key
 
-### Response:
+#### Response:
 
 ```jsx
 {
@@ -214,10 +214,10 @@ x-api-key
 
 For this step, the client must send crypto to the deposit address from the order response:
 
-- **Address field:** `cryptoTransaction.toAddress`
-- **Network / asset field:** `cryptoTransaction.currency` (in this example: `TRX`, i.e. Tron network)
-- **Amount field:** `exchangeOperation.inputAsset` (in this example: `51.204483`)
+* **Address field:** `cryptoTransaction.toAddress`
+* **Network / asset field:** `cryptoTransaction.currency` (in this example: `TRX`, i.e. Tron network)
+* **Amount field:** `exchangeOperation.inputAsset` (in this example: `51.204483`)
 
 The transfer must be made in the correct network and before the order expiration time (`expiresAtDate`).
 
-After the transfer is sent, poll `GET /api/v2/exchange/merchant/order?orderId=**78cc592e-cab0-4199-a70a-d0d4aab3ec6c**` until the order reaches a final status (`COMPLETED` or `FAILED`).
+After the transfer is sent, poll `GET /api/v2/exchange/merchant/order?orderId=**78cc592e-cab0-4199-a70a-d0d4aab3ec6c**` until the order reaches a final status (`COMPLETED` or `FAILED`).
