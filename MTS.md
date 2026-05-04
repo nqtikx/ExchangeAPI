@@ -15,7 +15,7 @@
 
 ### Flow for binding card:
 
-![image.png](../.gitbook/assets/image.png)
+![image.png](../.gitbook/image.png)
 
 ### First step
 
