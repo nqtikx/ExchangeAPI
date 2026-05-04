@@ -6,13 +6,13 @@
 
 ## Content
 
-* [**Assets**](./#assets-request)
-* [**Providers**](./#providers-request)
-* [**Limits**](./#limit-request)
-* [**Quote**](./#quote-request)
-* [**Buy**](./#buy-request---onramp)
-* [**Sell**](./#sell-request---offramp)
-* [**Order Status**](./#order-status-request)
+* [**Assets**](./README.md#assets-request)
+* [**Providers**](./README.md#providers-request)
+* [**Limits**](./README.md#limit-request)
+* [**Quote**](./README.md#quote-request)
+* [**Buy**](./README.md#buy-request---onramp)
+* [**Sell**](./README.md#sell-request---offramp)
+* [**Order Status**](./README.md#order-status-request)
 
 ***
 
@@ -28,8 +28,8 @@
 
 **Response:**
 
-* **cryptoAssets** - [`CryptoAsset`](./#common-interfaces), available cryptocurrencies
-* **fiatAssets** - [`FiatAsset`](./#common-interfaces), available fiat currencies
+* **cryptoAssets** - [`CryptoAsset`](./README.md#common-interfaces), available cryptocurrencies
+* **fiatAssets** - [`FiatAsset`](./README.md#common-interfaces), available fiat currencies
 
 ***
 
@@ -45,7 +45,7 @@
 
 **Response:**
 
-* **Array** - [PaymentProvider\[\]](./#payment-provider-interfaces)
+* **Array** - [PaymentProvider\[\]](./README.md#payment-provider-interfaces)
 
 ***
 
