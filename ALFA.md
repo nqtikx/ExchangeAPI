@@ -1,7 +1,5 @@
 # ALFA
 
-## ALFA
-
 ALFA is a payment provider of Belarus AlfaBank. To use it, client need to bind their card
 
 ### Available currencies:
