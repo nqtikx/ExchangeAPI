@@ -1,3 +1,5 @@
+# CARUSELL
+
 CARUSELL is a payment provider for СБП (Faster Payments System). The payment provider does not require card to be bound, payment is made in the bank's app through which the payment will be processed. Whitebird's connection with the client's bank is via a phone number. A phone number is required to make a payment
 
 ## Available currencies:
