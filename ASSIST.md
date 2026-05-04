@@ -1,7 +1,5 @@
 # ASSIST
 
-## ASSIST
-
 ASSIST is a payment provider of BelarusBank. To use it, client need to bind their card
 
 ### Available currencies:
