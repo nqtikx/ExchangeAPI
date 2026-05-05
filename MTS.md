@@ -108,7 +108,7 @@ Test card data: Choose country: Russia, Kazakhstan, Kyrgyzstan, Uzbekistan Numbe
                                                             Enter card details
 ```
 
-<figure><img src=".gitbook/assets/image (4).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure>
 
 \
 \
