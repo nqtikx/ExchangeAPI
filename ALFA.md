@@ -620,7 +620,7 @@ If the card status is ENABLED, the id field value can be used for the exchange o
     <tr>
       <td style="word-break: break-word; white-space: normal;">name</td>
       <td>string | null</td>
-      <td>Legacy provider display field (deprecated in API model, may be absent).</td>
+      <td>Provider display name shown to user in payment method lists.</td>
     </tr>
   </tbody>
 </table>

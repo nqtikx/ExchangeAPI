@@ -83,7 +83,7 @@ If `CORTI_MILLI` is not returned (or returned with non-`ENABLED` status), `SELL`
     <tr><td style="word-break: break-word; white-space: normal;">providerId</td><td>string</td><td>Payment provider identifier used in integrations and filters (for example ASSIST, CA, MTS).</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">providerType</td><td>string</td><td>Provider category/type returned by provider integration. Usually matches providerId for standard routes.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Payment method status: CURRENCY_DISABLED, DIRECTION_DISABLED, ENABLED, UNKNOWN.</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">name</td><td>string | null</td><td>Legacy provider display field (deprecated in API model, may be absent).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">name</td><td>string | null</td><td>Provider display name shown to user in payment method lists.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">isRestricted</td><td>boolean | null</td><td>Shows whether this payment method is restricted.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">isCrypto</td><td>boolean | null</td><td>Indicates whether payment method is crypto type.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">country</td><td>string | null</td><td>Country associated with payment method.</td></tr>
