@@ -2,6 +2,8 @@
 
 > BASE_URL https://api.dev.wbdevel.net
 
+MTS is a payment provider for RUB bank transfer processing via MTS Bank. The flow includes client card binding and bank-app payment confirmation.
+
 ### Available currencies:
 
 * RUB
