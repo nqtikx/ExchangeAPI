@@ -44,11 +44,10 @@ Verify that the payment provider is available
 
 #### POST api/v2/exchange/merchant/payment/provider
 
-#### Request Header:
+**Headers**
+- `x-api-key: {{x-api-key}}`
 
-x-api-key
-
-#### Request Body:
+**Request**
 
 ```jsx
 {
@@ -58,7 +57,7 @@ x-api-key
 }
 ```
 
-#### Response:
+**Response**
 
 ```jsx
 {
@@ -100,17 +99,104 @@ x-api-key
 
 It is sufficient to verify that the payment provider is available via the id field. id = ASSIST
 
+**Headers**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="200" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Type</th>
+      <th width="100">Required</th>
+      <th width="580">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">x-api-key</td>
+      <td>string</td>
+      <td>Yes</td>
+      <td>Authenticates the merchant server-to-server request. Use the API key issued for the merchant and target environment.</td>
+    </tr>
+  </tbody>
+</table>
+
+**Request**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="200" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Type</th>
+      <th width="100">Required</th>
+      <th width="580">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">clientId</td>
+      <td>string (UUID)</td>
+      <td>Yes</td>
+      <td>Client identifier used to scope the request to a specific client.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">fiatAsset</td>
+      <td>string</td>
+      <td>No</td>
+      <td>Optional fiat filter. Allowed values: BYN, RUB, USD, EUR.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">orderType</td>
+      <td>string</td>
+      <td>No</td>
+      <td>Optional order direction filter. Allowed values: BUY, SELL.</td>
+    </tr>
+  </tbody>
+</table>
+
+**Response**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Type</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">id</td>
+      <td>string</td>
+      <td>Provider identifier. For Assist flow expected value is ASSIST.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">name</td>
+      <td>string</td>
+      <td>Provider display name.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">addPaymentMethod</td>
+      <td>boolean</td>
+      <td>Defines whether provider supports adding payment methods.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">config.paymentSystems[].directions[].currencies[].countries</td>
+      <td>array of strings</td>
+      <td>Supported countries list for selected currency and direction.</td>
+    </tr>
+  </tbody>
+</table>
+
 ## Second step
 
 Generate link to bind client card
 
 #### POST api/v2/exchange/merchant/payment/card/bind
 
-#### Request Header:
+**Headers**
+- `x-api-key: {{x-api-key}}`
 
-x-api-key
-
-#### Request Body:
+**Request**
 
 `returnUrl` - Link to the resource where the client should be redirected after binding the card
 
@@ -122,13 +208,86 @@ x-api-key
 }
 ```
 
-#### Response:
+**Response**
 
 ```jsx
 {
     "url": "https://payments.t.paysecure.ru/pay/p2p/register_ccard.cfm?merchant_id=477633&orderNumber=7981f9e76b394b1b820d0eb76307098e&docnumber=846488&customerNumber=80c71ceb0d614706a630ccf01a56cedc&firstname=BXBCBCB&lastname=BXBXBXB&language=RU&url_return=https%3A%2F%2Fwww.google.com"
 }
 ```
+
+**Headers**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="200" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Type</th>
+      <th width="100">Required</th>
+      <th width="580">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">x-api-key</td>
+      <td>string</td>
+      <td>Yes</td>
+      <td>Authenticates the merchant server-to-server request. Use the API key issued for the merchant and target environment.</td>
+    </tr>
+  </tbody>
+</table>
+
+**Request**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="200" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Type</th>
+      <th width="100">Required</th>
+      <th width="580">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">clientId</td>
+      <td>string (UUID)</td>
+      <td>Yes</td>
+      <td>Client identifier used to bind payment method to a specific client.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">providerType</td>
+      <td>string</td>
+      <td>Yes</td>
+      <td>Payment provider type. For this flow expected value is ASSIST.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">returnUrl</td>
+      <td>string</td>
+      <td>Yes</td>
+      <td>URL where client will be redirected after card binding flow is finished.</td>
+    </tr>
+  </tbody>
+</table>
+
+**Response**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Type</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">url</td>
+      <td>string</td>
+      <td>Provider URL that must be opened by client to complete card binding.</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Third step
 
@@ -212,11 +371,10 @@ Get available payment methods for the client
 
 #### POST api/v2/exchange/merchant/payment/method
 
-#### Request Header:
+**Headers**
+- `x-api-key: {{x-api-key}}`
 
-x-api-key
-
-#### Request Body:
+**Request**
 
 ```jsx
 {
@@ -226,7 +384,7 @@ x-api-key
 }
 ```
 
-#### Response:
+**Response**
 
 ```jsx
 [
@@ -245,3 +403,116 @@ x-api-key
 ```
 
 If the card status is ENABLED, the id field value can be used for the exchange operation as the paymentToken field
+
+**Headers**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="200" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Type</th>
+      <th width="100">Required</th>
+      <th width="580">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">x-api-key</td>
+      <td>string</td>
+      <td>Yes</td>
+      <td>Authenticates the merchant server-to-server request. Use the API key issued for the merchant and target environment.</td>
+    </tr>
+  </tbody>
+</table>
+
+**Request**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="200" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Type</th>
+      <th width="100">Required</th>
+      <th width="580">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">clientId</td>
+      <td>string (UUID)</td>
+      <td>Yes</td>
+      <td>Client identifier used to scope the request to a specific client.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">fiatAsset</td>
+      <td>string</td>
+      <td>No</td>
+      <td>Optional fiat filter. Allowed values: BYN, RUB, USD, EUR.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">orderType</td>
+      <td>string</td>
+      <td>No</td>
+      <td>Optional order direction filter. Allowed values: BUY, SELL.</td>
+    </tr>
+  </tbody>
+</table>
+
+**Response**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Type</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">id</td>
+      <td>string</td>
+      <td>Payment method token. Use this value as paymentToken/paymentMethodToken in exchange operations.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">number</td>
+      <td>string</td>
+      <td>Masked card number shown to client.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">brand</td>
+      <td>string</td>
+      <td>Card brand returned by provider (for example VISA, MASTERCARD).</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">providerId</td>
+      <td>string</td>
+      <td>Payment provider identifier used in integrations and filters.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">providerType</td>
+      <td>string</td>
+      <td>Provider category/type returned by provider integration.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">status</td>
+      <td>string</td>
+      <td>Payment method status. Use ENABLED methods for operation creation.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">isRestricted</td>
+      <td>boolean</td>
+      <td>Shows whether this payment method is restricted.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">isCrypto</td>
+      <td>boolean</td>
+      <td>Indicates whether the payment method is crypto type.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">country</td>
+      <td>string</td>
+      <td>Country associated with payment method.</td>
+    </tr>
+  </tbody>
+</table>

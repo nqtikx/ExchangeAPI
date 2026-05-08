@@ -23,11 +23,10 @@ Get available payment methods for the client
 
 #### POST api/v2/exchange/merchant/payment/method
 
-#### Request Header:
+**Headers**
+- `x-api-key: {{x-api-key}}`
 
-x-api-key
-
-#### Request Body:
+**Request**
 
 ```jsx
 {
@@ -37,7 +36,7 @@ x-api-key
 }
 ```
 
-#### Response:
+**Response**
 
 ```jsx
 [
@@ -52,17 +51,46 @@ x-api-key
 
 If `CORTI_MILLI` is not returned (or returned with non-`ENABLED` status), `SELL` via CORTI\_MILLI is not available for the current client/merchant/environment.
 
+**Headers**
+
+<table width="100%">
+  <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
+  <tbody><tr><td style="word-break: break-word; white-space: normal;">x-api-key</td><td>string</td><td>Yes</td><td>Authenticates the merchant server-to-server request.</td></tr></tbody>
+</table>
+
+**Request**
+
+<table width="100%">
+  <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
+  <tbody>
+    <tr><td style="word-break: break-word; white-space: normal;">clientId</td><td>string (UUID)</td><td>Yes</td><td>Client identifier.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">fiatAsset</td><td>string</td><td>No</td><td>Optional fiat filter (RUB).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">orderType</td><td>string</td><td>No</td><td>Optional direction filter (SELL).</td></tr>
+  </tbody>
+</table>
+
+**Response**
+
+<table width="100%">
+  <thead><tr><th width="240" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="640">Description</th></tr></thead>
+  <tbody>
+    <tr><td style="word-break: break-word; white-space: normal;">providerId</td><td>string</td><td>Provider identifier (CORTI_MILLI).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">providerType</td><td>string</td><td>Provider type.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Availability status (use ENABLED).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">name</td><td>string</td><td>Provider display name.</td></tr>
+  </tbody>
+</table>
+
 ### Second step
 
 Create a quote for the selected CORTI\_MILLI payment method
 
 #### POST api/v2/exchange/merchant/quote
 
-#### Request Header:
+**Headers**
+- `x-api-key: {{x-api-key}}`
 
-x-api-key
-
-#### Request Body:
+**Request**
 
 ```jsx
 {
@@ -81,7 +109,7 @@ x-api-key
 }
 ```
 
-#### Response:
+**Response**
 
 ```jsx
 {
@@ -107,17 +135,48 @@ x-api-key
 }
 ```
 
+**Headers**
+
+<table width="100%">
+  <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
+  <tbody><tr><td style="word-break: break-word; white-space: normal;">x-api-key</td><td>string</td><td>Yes</td><td>Authenticates the merchant server-to-server request.</td></tr></tbody>
+</table>
+
+**Request**
+
+<table width="100%">
+  <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
+  <tbody>
+    <tr><td style="word-break: break-word; white-space: normal;">clientId</td><td>string (UUID)</td><td>Yes</td><td>Client identifier.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">fromAsset / toAsset</td><td>object</td><td>Yes</td><td>Input/output asset pair for quote calculation.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">paymentMethod</td><td>string</td><td>Yes</td><td>Provider type (CORTI_MILLI).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">paymentMethodToken</td><td>string</td><td>Yes</td><td>Payment token for payout route.</td></tr>
+  </tbody>
+</table>
+
+**Response**
+
+<table width="100%">
+  <thead><tr><th width="240" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="640">Description</th></tr></thead>
+  <tbody>
+    <tr><td style="word-break: break-word; white-space: normal;">quoteId</td><td>string</td><td>Quote identifier used for order creation.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">fromAsset / toAsset</td><td>object</td><td>Resolved assets and amounts.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">rate / plainRate</td><td>number</td><td>Final rate and base reference rate.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">fee</td><td>object</td><td>Fee breakdown object.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">expirationDate</td><td>string</td><td>Quote expiration timestamp.</td></tr>
+  </tbody>
+</table>
+
 ### Third step
 
 Create a sell order using the created quote.
 
 #### GET api/v2/exchange/merchant/sell?quoteId=420d72d9-715c-41d9-93e8-1d1cb20924e3
 
-#### Request Header:
+**Headers**
+- `x-api-key: {{x-api-key}}`
 
-x-api-key
-
-#### Response:
+**Response**
 
 ```jsx
 {
@@ -132,17 +191,43 @@ x-api-key
 }
 ```
 
+**Headers**
+
+<table width="100%">
+  <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
+  <tbody><tr><td style="word-break: break-word; white-space: normal;">x-api-key</td><td>string</td><td>Yes</td><td>Authenticates the merchant server-to-server request.</td></tr></tbody>
+</table>
+
+**Request**
+
+<table width="100%">
+  <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
+  <tbody><tr><td style="word-break: break-word; white-space: normal;">quoteId</td><td>string (UUID)</td><td>Yes</td><td>Quote identifier used to create sell order.</td></tr></tbody>
+</table>
+
+**Response**
+
+<table width="100%">
+  <thead><tr><th width="240" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="640">Description</th></tr></thead>
+  <tbody>
+    <tr><td style="word-break: break-word; white-space: normal;">id</td><td>string</td><td>Order identifier.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">type</td><td>string</td><td>Order type (SELL).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Current order status.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">depositCryptoAddress</td><td>string</td><td>Address where client should send crypto.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">expiresAtDate</td><td>string | null</td><td>Order expiration timestamp.</td></tr>
+  </tbody>
+</table>
+
 ### Fourth step
 
 Get order details and provide transfer instructions to the client.
 
 #### GET /api/v2/exchange/merchant/order?orderId=c711b777-5d13-4156-a57d-456cc307626b
 
-#### Request Header:
+**Headers**
+- `x-api-key: {{x-api-key}}`
 
-x-api-key
-
-#### Response:
+**Response**
 
 ```jsx
 {
@@ -211,6 +296,34 @@ x-api-key
     "expiresAtDate": "2026-03-31T15:20:39.089773"
 }
 ```
+
+**Headers**
+
+<table width="100%">
+  <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
+  <tbody><tr><td style="word-break: break-word; white-space: normal;">x-api-key</td><td>string</td><td>Yes</td><td>Authenticates the merchant server-to-server request.</td></tr></tbody>
+</table>
+
+**Request**
+
+<table width="100%">
+  <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
+  <tbody><tr><td style="word-break: break-word; white-space: normal;">orderId</td><td>string (UUID)</td><td>Yes</td><td>Order identifier returned by sell order creation.</td></tr></tbody>
+</table>
+
+**Response**
+
+<table width="100%">
+  <thead><tr><th width="240" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="640">Description</th></tr></thead>
+  <tbody>
+    <tr><td style="word-break: break-word; white-space: normal;">id</td><td>string</td><td>Order identifier.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Current order status.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">exchangeOperation</td><td>object</td><td>Exchange operation details for this order.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">cryptoTransaction</td><td>object</td><td>Crypto leg details including addresses and status.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">fiatTransaction</td><td>object</td><td>Fiat leg details including provider and payout status.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">expiresAtDate</td><td>string | null</td><td>Order expiration timestamp.</td></tr>
+  </tbody>
+</table>
 
 For this step, the client must send crypto to the deposit address from the order response:
 
