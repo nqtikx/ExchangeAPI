@@ -546,7 +546,7 @@ Create an order specifying `returnUrl` and `failUrl` (optional) after quote crea
 Take `fiatTransaction.orderIdentity` from the order response.\
 This value is the payment reference number that the user enters in the bank app to confirm the transfer.
 
-#### GET https://api.dev.wbdevel.net/api/v2/exchange/merchant/order?orderId=\{{orderId\}}
+#### GET api/v2/exchange/merchant/order?orderId=\{{orderId\}}
 
 **Headers**
 - `x-api-key: {{x-api-key}}`
@@ -709,81 +709,3 @@ In production flow, after order creation the client must complete payment in the
 **“Transfers abroad” → “Belarus” → “RUB” → Enter amount → “WhiteBird” → Enter order number → Confirm transfer.**
 
 <figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
-
-### **Check order status**
-
-#### GET /api/v2/exchange/merchant/order?orderId=\{{orderId\}}
-
-**Headers**
-- `x-api-key: {{x-api-key}}`
-
-**Response**
-
-```jsx
-{
-    "id": "966bc041-80a5-413a-abc7-0a45c13f9489",
-    "type": "BUY",
-    "status": "COMPLETED",
-    "creationDate": "2026-05-04T09:25:15.257418",
-    "modificationDate": "2026-05-04T09:28:06.042662",
-    "number": 151000004194,
-    "exchangeOperation": {
-        "inputCurrency": "RUB",
-        "inputAsset": 922,
-        "outputCurrency": "TRX",
-        "outputAsset": 31.495284,
-        "exchangeFeeAssetInFiat": 23.05,
-        "bonusOutputAsset": null,
-        "plainRatio": 28.306,
-        "ratio": 29.2742,
-        "currencyPair": {
-            "fromCurrency": "RUB",
-            "toCurrency": "TRX"
-        }
-    },
-    "cryptoTransaction": {
-        "hash": "061b0a94d09330feeaa83fd88a2477227710cbbd9329f93d710719febba103cb",
-        "externalCryptoAddress": "TCT2pKJXo233hrKWQMeCptC8My1KGvtsU4",
-        "internalCryptoAddress": "TSaysSYUgBoKbtBgnXdxvNQPjkeXC1s9eM",
-        "fromAddress": "TSaysSYUgBoKbtBgnXdxvNQPjkeXC1s9eM",
-        "toAddress": "TCT2pKJXo233hrKWQMeCptC8My1KGvtsU4",
-        "status": "CONFIRMED",
-        "currency": "TRX",
-        "fee": "0",
-        "feePaymentEnabledByClient": false,
-        "type": "AUTO",
-        "comment": null
-    },
-    "fiatTransaction": {
-        "status": "APPROVED",
-        "paymentToken": null,
-        "post": null,
-        "brand": null,
-        "internalToken": null,
-        "orderIdentity": "5605652",
-        "link": null,
-        "providerType": "MTS",
-        "paymentType": null,
-        "processingBank": null,
-        "resultMessage": null,
-        "currency": "RUB",
-        "processorTransactionNumber": null
-    },
-    "client": {
-        "clientId": "3e1469fa-8d35-441c-87b1-a007aeba2562"
-    },
-    "serverDate": "2026-05-04T09:34:27+0000",
-    "exchangeType": "SELL",
-    "operationType": "FIAT_TO_CRYPTO",
-    "orderType": "DEFAULT",
-    "completionDate": "2026-05-04T09:28:04+0000",
-    "resultMessage": null,
-    "submitByResident": null,
-    "merchantName": "wb",
-    "merchantBonus": null,
-    "promoCodeDetails": null,
-    "fromSource": "EXT",
-    "toSource": "EXT",
-    "expiresAtDate": null
-}
-```
