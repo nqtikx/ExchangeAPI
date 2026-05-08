@@ -180,9 +180,69 @@ It is sufficient to verify that the payment provider is available via the id fie
       <td>Defines whether provider supports adding payment methods.</td>
     </tr>
     <tr>
+      <td style="word-break: break-word; white-space: normal;">config</td>
+      <td>object</td>
+      <td>Provider routing configuration.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">config.paymentSystems</td>
+      <td>array of objects</td>
+      <td>Payment systems list for provider.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">config.paymentSystems[].paymentSystem</td>
+      <td>string</td>
+      <td>Payment system name (for example VISA).</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">config.paymentSystems[].type</td>
+      <td>string</td>
+      <td>Provider channel type.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">config.paymentSystems[].directions</td>
+      <td>array of objects</td>
+      <td>Supported operation directions for this payment system.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">config.paymentSystems[].directions[].direction</td>
+      <td>string</td>
+      <td>Direction for payment system route (BUY/SELL).</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">config.paymentSystems[].directions[].currencies</td>
+      <td>array of objects</td>
+      <td>Supported currencies for selected direction.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">config.paymentSystems[].directions[].currencies[].currency</td>
+      <td>string</td>
+      <td>Fiat currency for this route.</td>
+    </tr>
+    <tr>
       <td style="word-break: break-word; white-space: normal;">config.paymentSystems[].directions[].currencies[].countries</td>
       <td>array of strings</td>
       <td>Supported countries list for selected currency and direction.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">commissions</td>
+      <td>array of objects</td>
+      <td>Provider commission settings returned for merchant route.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">commissions[].bank</td>
+      <td>string</td>
+      <td>Bank group key for commission row.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">commissions[].buyCommission</td>
+      <td>string</td>
+      <td>Commission value/range for buy direction.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">commissions[].sellCommission</td>
+      <td>string</td>
+      <td>Commission value/range for sell direction.</td>
     </tr>
   </tbody>
 </table>
@@ -264,8 +324,8 @@ Generate link to bind client card
     <tr>
       <td style="word-break: break-word; white-space: normal;">returnUrl</td>
       <td>string</td>
-      <td>Yes</td>
-      <td>URL where client will be redirected after card binding flow is finished.</td>
+      <td>No</td>
+      <td>Optional URL where client is redirected after card binding flow is finished.</td>
     </tr>
   </tbody>
 </table>

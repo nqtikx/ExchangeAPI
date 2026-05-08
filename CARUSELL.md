@@ -121,8 +121,10 @@ To create a quota, specify a random uuid in the paymentMethodToken field
   <tbody>
     <tr><td style="word-break: break-word; white-space: normal;">clientId</td><td>string (UUID)</td><td>Yes</td><td>Client identifier.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">fromAsset / toAsset</td><td>object</td><td>Yes</td><td>Input/output asset pair for quote calculation.</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">paymentMethod</td><td>string</td><td>Yes</td><td>Provider type (CARUSELL).</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">paymentMethodToken</td><td>string</td><td>Yes</td><td>Temporary/random token for CARUSELL quote route.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">paymentMethod</td><td>string</td><td>No</td><td>Optional provider type (CARUSELL for this route).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">paymentMethodToken</td><td>string</td><td>No</td><td>Optional provider token/reference for selected payment route.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">destinationCryptoAddress</td><td>string</td><td>No</td><td>Destination wallet address for crypto-out flows.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">comment</td><td>string</td><td>No</td><td>Used only for the TON network as transfer memo. For other networks ignored.</td></tr>
   </tbody>
 </table>
 
@@ -132,9 +134,13 @@ To create a quota, specify a random uuid in the paymentMethodToken field
   <thead><tr><th width="240" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="640">Description</th></tr></thead>
   <tbody>
     <tr><td style="word-break: break-word; white-space: normal;">quoteId</td><td>string</td><td>Quote identifier used for order creation.</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">fromAsset / toAsset</td><td>object</td><td>Resolved assets and amounts.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">fromAsset / toAsset</td><td>object</td><td>Resolved assets and amounts (code/network/amount).</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">rate / plainRate</td><td>number</td><td>Final rate and base reference rate.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">fee</td><td>object</td><td>Fee breakdown object.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">fee.total</td><td>number</td><td>Total fee amount in fee.asset currency.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">fee.service</td><td>number | null</td><td>Service fee component in fee.asset currency.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">fee.network</td><td>number | null</td><td>Network/payment component in fee.asset currency.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">fee.asset</td><td>string</td><td>Asset code in which fee.total, fee.service, and fee.network are expressed.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">expirationDate</td><td>string</td><td>Quote expiration timestamp.</td></tr>
   </tbody>
 </table>
@@ -178,6 +184,8 @@ To create a quota, specify a random uuid in the paymentMethodToken field
   <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
   <tbody>
     <tr><td style="word-break: break-word; white-space: normal;">quoteId</td><td>string (UUID)</td><td>Yes</td><td>Quote identifier.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">destinationCryptoAddress</td><td>string</td><td>No</td><td>Destination wallet address for crypto-out flows.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">comment</td><td>string</td><td>No</td><td>Used only for the TON network as transfer memo. For other networks ignored.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">returnUrl</td><td>string</td><td>No</td><td>Redirect URL on success.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">failUrl</td><td>string</td><td>No</td><td>Redirect URL on failure.</td></tr>
   </tbody>
@@ -192,6 +200,10 @@ To create a quota, specify a random uuid in the paymentMethodToken field
     <tr><td style="word-break: break-word; white-space: normal;">type</td><td>string</td><td>Order type (BUY).</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Current order status.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">fiatPaymentLink</td><td>string</td><td>Provider payment link for client checkout.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">creationDate</td><td>string</td><td>Order creation timestamp in server date-time format.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">modificationDate</td><td>string</td><td>Last order update timestamp in server date-time format.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">cryptoTransaction</td><td>object | null</td><td>Crypto transaction summary object (hash only when present).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">expiresAtDate</td><td>string | null</td><td>Order expiration timestamp.</td></tr>
   </tbody>
 </table>
 
@@ -211,8 +223,8 @@ Create an order specifying returnUrl and failUrl to ensure the client is redirec
     "id": "53ab15af-31c9-4c8d-8ac8-55f9e353c09e",
     "type": "BUY",
     "status": "PROCESSING",
-    "fiatPaymentLink": "https://sandbox.carusell.world/processing/api/v1/test/checkout/payment?payment-id=284949544680468480&status=CAPTURED&settlement-account-id=SA241575994854899712&signature=8f5a61dcdab280b21eb552e510f5c77a5b42f1da0e1c2d0896834328a5e32ad9",
-    "createDate": "2026-02-26T11:45:38+0000",
+    "fiatPaymentLink": "https://sandbox.carusell.world/processing/api/v1/test/checkout/payment?payment-id...",
+    "creationDate": "2026-02-26T11:45:38+0000",
     "modificationDate": "2026-02-26T11:45:38+0000"
 }
 ```
@@ -378,7 +390,7 @@ Create an order with the bankIdentifier selected by the client
     "type": "SELL",
     "status": "PROCESSING",
     "depositCryptoAddress": "TYPAe4vUYtUAKgrRt7iUc2fLuVhRHfCiJG",
-    "createDate": "2026-02-26T11:45:38+0000",
+    "creationDate": "2026-02-26T11:45:38+0000",
     "modificationDate": "2026-02-26T11:45:38+0000"
 }
 ```
@@ -396,7 +408,9 @@ Create an order with the bankIdentifier selected by the client
   <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
   <tbody>
     <tr><td style="word-break: break-word; white-space: normal;">quoteId</td><td>string (UUID)</td><td>Yes</td><td>Quote identifier.</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">bankIdentifier</td><td>string</td><td>Yes</td><td>Bank id selected from CARUSELL bank list.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">failureDepositAddress</td><td>string</td><td>No</td><td>Refund wallet address used if the order fails before completion.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">sourceAddress</td><td>string</td><td>No</td><td>Sender wallet address for compliance checks.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">bankIdentifier</td><td>string</td><td>No</td><td>Bank id selected from CARUSELL bank list.</td></tr>
   </tbody>
 </table>
 
@@ -409,6 +423,10 @@ Create an order with the bankIdentifier selected by the client
     <tr><td style="word-break: break-word; white-space: normal;">type</td><td>string</td><td>Order type (SELL).</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Current order status.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">depositCryptoAddress</td><td>string</td><td>Address where client should send crypto.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">creationDate</td><td>string</td><td>Order creation timestamp in server date-time format.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">modificationDate</td><td>string</td><td>Last order update timestamp in server date-time format.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">cryptoTransaction</td><td>object | null</td><td>Crypto transaction summary object (hash only when present).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">expiresAtDate</td><td>string | null</td><td>Order expiration timestamp.</td></tr>
   </tbody>
 </table>
 

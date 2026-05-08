@@ -149,8 +149,10 @@ Create a quote for the selected CORTI\_MILLI payment method
   <tbody>
     <tr><td style="word-break: break-word; white-space: normal;">clientId</td><td>string (UUID)</td><td>Yes</td><td>Client identifier.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">fromAsset / toAsset</td><td>object</td><td>Yes</td><td>Input/output asset pair for quote calculation.</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">paymentMethod</td><td>string</td><td>Yes</td><td>Provider type (CORTI_MILLI).</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">paymentMethodToken</td><td>string</td><td>Yes</td><td>Payment token for payout route.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">paymentMethod</td><td>string</td><td>No</td><td>Optional provider type (CORTI_MILLI for this route).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">paymentMethodToken</td><td>string</td><td>No</td><td>Optional provider token/reference for selected payout route.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">destinationCryptoAddress</td><td>string</td><td>No</td><td>Destination wallet address for crypto-out flows.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">comment</td><td>string</td><td>No</td><td>Used only for the TON network as transfer memo. For other networks ignored.</td></tr>
   </tbody>
 </table>
 
@@ -160,9 +162,13 @@ Create a quote for the selected CORTI\_MILLI payment method
   <thead><tr><th width="240" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="640">Description</th></tr></thead>
   <tbody>
     <tr><td style="word-break: break-word; white-space: normal;">quoteId</td><td>string</td><td>Quote identifier used for order creation.</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">fromAsset / toAsset</td><td>object</td><td>Resolved assets and amounts.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">fromAsset / toAsset</td><td>object</td><td>Resolved assets and amounts (code/network/amount).</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">rate / plainRate</td><td>number</td><td>Final rate and base reference rate.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">fee</td><td>object</td><td>Fee breakdown object.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">fee.total</td><td>number</td><td>Total fee amount in fee.asset currency.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">fee.service</td><td>number | null</td><td>Service fee component in fee.asset currency.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">fee.network</td><td>number | null</td><td>Network/payment component in fee.asset currency.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">fee.asset</td><td>string</td><td>Asset code in which fee.total, fee.service, and fee.network are expressed.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">expirationDate</td><td>string</td><td>Quote expiration timestamp.</td></tr>
   </tbody>
 </table>
@@ -202,7 +208,12 @@ Create a sell order using the created quote.
 
 <table width="100%">
   <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
-  <tbody><tr><td style="word-break: break-word; white-space: normal;">quoteId</td><td>string (UUID)</td><td>Yes</td><td>Quote identifier used to create sell order.</td></tr></tbody>
+  <tbody>
+    <tr><td style="word-break: break-word; white-space: normal;">quoteId</td><td>string (UUID)</td><td>Yes</td><td>Quote identifier used to create sell order.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">failureDepositAddress</td><td>string</td><td>No</td><td>Refund wallet address used if the order fails before completion.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">sourceAddress</td><td>string</td><td>No</td><td>Sender wallet address for compliance checks.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">bankIdentifier</td><td>string</td><td>No</td><td>Bank identifier if provider route requires bank selection.</td></tr>
+  </tbody>
 </table>
 
 **Response**

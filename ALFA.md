@@ -243,6 +243,26 @@ It is sufficient to verify that the payment provider is available via the id fie
       <td>array of strings</td>
       <td>Supported bank list for selected currency and direction.</td>
     </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">commissions</td>
+      <td>array of objects</td>
+      <td>Provider commission settings returned for merchant route.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">commissions[].bank</td>
+      <td>string</td>
+      <td>Bank group key for commission row.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">commissions[].buyCommission</td>
+      <td>string</td>
+      <td>Commission value/range for buy direction.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">commissions[].sellCommission</td>
+      <td>string</td>
+      <td>Commission value/range for sell direction.</td>
+    </tr>
   </tbody>
 </table>
 
@@ -323,8 +343,8 @@ Generate link to bind client card
     <tr>
       <td style="word-break: break-word; white-space: normal;">returnUrl</td>
       <td>string</td>
-      <td>Yes</td>
-      <td>URL where client will be redirected after card binding flow is finished.</td>
+      <td>No</td>
+      <td>Optional URL where client is redirected after card binding flow is finished.</td>
     </tr>
   </tbody>
 </table>
