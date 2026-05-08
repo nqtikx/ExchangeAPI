@@ -580,17 +580,17 @@ If the card status is ENABLED, the id field value can be used for the exchange o
     <tr>
       <td style="word-break: break-word; white-space: normal;">providerId</td>
       <td>string</td>
-      <td>Payment provider identifier used in integrations and filters.</td>
+      <td>Payment provider identifier used in integrations and filters (for example ASSIST, CA, MTS).</td>
     </tr>
     <tr>
       <td style="word-break: break-word; white-space: normal;">providerType</td>
       <td>string</td>
-      <td>Provider category/type returned by provider integration.</td>
+      <td>Provider category/type returned by provider integration. Usually matches providerId for standard routes.</td>
     </tr>
     <tr>
       <td style="word-break: break-word; white-space: normal;">status</td>
       <td>string</td>
-      <td>Payment method status. Use ENABLED methods for operation creation.</td>
+      <td>Payment method status: CURRENCY_DISABLED, DIRECTION_DISABLED, ENABLED, UNKNOWN.</td>
     </tr>
     <tr>
       <td style="word-break: break-word; white-space: normal;">isRestricted</td>

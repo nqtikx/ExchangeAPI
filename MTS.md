@@ -534,7 +534,7 @@ Create an order specifying `returnUrl` and `failUrl` (optional) after quote crea
   <tbody>
     <tr><td style="word-break: break-word; white-space: normal;">id</td><td>string</td><td>Order identifier.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">type</td><td>string</td><td>Order type (BUY).</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Current order lifecycle state.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Current order lifecycle state: NEW, PROCESSING, COMPLETED, EXPIRED, ERROR.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">fiatPaymentLink</td><td>string | null</td><td>Payment URL returned for provider checkout when available.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">creationDate</td><td>string</td><td>Order creation timestamp in server date-time format.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">modificationDate</td><td>string</td><td>Last order update timestamp in server date-time format.</td></tr>
@@ -645,7 +645,7 @@ This value is the payment reference number that the user enters in the bank app 
   <tbody>
     <tr><td style="word-break: break-word; white-space: normal;">id</td><td>string</td><td>Order identifier.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">type</td><td>string</td><td>Order type.</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Current order lifecycle state.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Current order lifecycle state: NEW, PROCESSING, COMPLETED, EXPIRED, ERROR.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">number</td><td>number</td><td>Sequential order number displayed for business/payment reference.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">exchangeOperation</td><td>object</td><td>Exchange side details (input/output, rates, fees).</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">exchangeOperation.inputCurrency</td><td>string</td><td>Input currency code.</td></tr>

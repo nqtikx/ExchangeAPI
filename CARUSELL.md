@@ -74,9 +74,9 @@ Get available payment methods for the client
 <table width="100%">
   <thead><tr><th width="240" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="640">Description</th></tr></thead>
   <tbody>
-    <tr><td style="word-break: break-word; white-space: normal;">providerId</td><td>string</td><td>Provider identifier.</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">providerType</td><td>string</td><td>Provider type.</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Availability status (use ENABLED).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">providerId</td><td>string</td><td>Payment provider identifier used in integrations and filters (for example ASSIST, CA, MTS).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">providerType</td><td>string</td><td>Provider category/type returned by provider integration. Usually matches providerId for standard routes.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Payment method status: CURRENCY_DISABLED, DIRECTION_DISABLED, ENABLED, UNKNOWN.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">name</td><td>string</td><td>Provider display name.</td></tr>
   </tbody>
 </table>
@@ -222,7 +222,7 @@ Create an order specifying returnUrl and failUrl to ensure the client is redirec
   <tbody>
     <tr><td style="word-break: break-word; white-space: normal;">id</td><td>string</td><td>Order identifier.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">type</td><td>string</td><td>Order type (BUY).</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Current order status.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Current order status: NEW, PROCESSING, COMPLETED, EXPIRED, ERROR.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">fiatPaymentLink</td><td>string</td><td>Provider payment link for client checkout.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">creationDate</td><td>string</td><td>Order creation timestamp in server date-time format.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">modificationDate</td><td>string</td><td>Last order update timestamp in server date-time format.</td></tr>
@@ -292,9 +292,9 @@ Get available payment methods for the client
 <table width="100%">
   <thead><tr><th width="240" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="640">Description</th></tr></thead>
   <tbody>
-    <tr><td style="word-break: break-word; white-space: normal;">providerId</td><td>string</td><td>Provider identifier.</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">providerType</td><td>string</td><td>Provider type.</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Availability status (use ENABLED).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">providerId</td><td>string</td><td>Payment provider identifier used in integrations and filters (for example ASSIST, CA, MTS).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">providerType</td><td>string</td><td>Provider category/type returned by provider integration. Usually matches providerId for standard routes.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Payment method status: CURRENCY_DISABLED, DIRECTION_DISABLED, ENABLED, UNKNOWN.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">name</td><td>string</td><td>Provider display name.</td></tr>
   </tbody>
 </table>
@@ -491,7 +491,7 @@ Create an order with the bankIdentifier selected by the client
   <tbody>
     <tr><td style="word-break: break-word; white-space: normal;">id</td><td>string</td><td>Order identifier.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">type</td><td>string</td><td>Order type (SELL).</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Current order status.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Current order status: NEW, PROCESSING, COMPLETED, EXPIRED, ERROR.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">depositCryptoAddress</td><td>string</td><td>Address where client should send crypto.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">creationDate</td><td>string</td><td>Order creation timestamp in server date-time format.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">modificationDate</td><td>string</td><td>Last order update timestamp in server date-time format.</td></tr>
