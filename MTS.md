@@ -1,5 +1,7 @@
 # MTS
 
+> BASE_URL https://api.dev.wbdevel.net
+
 ### Available currencies:
 
 * RUB
@@ -491,10 +493,6 @@ Create an order specifying `returnUrl` and `failUrl` (optional) after quote crea
 **Headers**
 - `x-api-key: {{x-api-key}}`
 
-**Request**
-
-`quoteId`, `returnUrl`, and `failUrl` are sent as query parameters. `returnUrl` and `failUrl` are optional.
-
 **Response**
 
 ```jsx
@@ -514,7 +512,7 @@ Create an order specifying `returnUrl` and `failUrl` (optional) after quote crea
   <tbody><tr><td style="word-break: break-word; white-space: normal;">x-api-key</td><td>string</td><td>Yes</td><td>Authenticates the merchant server-to-server request. Use the API key issued for the merchant and target environment.</td></tr></tbody>
 </table>
 
-**Request**
+**Parameters**
 
 <table width="100%">
   <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
@@ -552,10 +550,6 @@ This value is the payment reference number that the user enters in the bank app 
 
 **Headers**
 - `x-api-key: {{x-api-key}}`
-
-**Request**
-
-`orderId` is sent as a query parameter.
 
 **Response**
 
@@ -635,7 +629,7 @@ This value is the payment reference number that the user enters in the bank app 
   <tbody><tr><td style="word-break: break-word; white-space: normal;">x-api-key</td><td>string</td><td>Yes</td><td>Authenticates the merchant server-to-server request. Use the API key issued for the merchant and target environment.</td></tr></tbody>
 </table>
 
-**Request**
+**Parameters**
 
 <table width="100%">
   <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>

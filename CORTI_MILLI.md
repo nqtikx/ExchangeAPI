@@ -1,5 +1,7 @@
 # CORTI\_MILLI
 
+> BASE_URL https://api.dev.wbdevel.net
+
 CORTI\_MILLI is a payment provider for bank transfer processing in RUB. The payment provider does not require card binding in Whitebird. Payment is processed through the provider banking flow after order creation.
 
 ### Available currencies:
@@ -213,7 +215,7 @@ Create a sell order using the created quote.
   <tbody><tr><td style="word-break: break-word; white-space: normal;">x-api-key</td><td>string</td><td>Yes</td><td>Authenticates the merchant server-to-server request.</td></tr></tbody>
 </table>
 
-**Request**
+**Parameters**
 
 <table width="100%">
   <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
@@ -327,7 +329,7 @@ Get order details and provide transfer instructions to the client.
   <tbody><tr><td style="word-break: break-word; white-space: normal;">x-api-key</td><td>string</td><td>Yes</td><td>Authenticates the merchant server-to-server request.</td></tr></tbody>
 </table>
 
-**Request**
+**Parameters**
 
 <table width="100%">
   <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>

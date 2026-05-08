@@ -1,5 +1,7 @@
 # ALFA
 
+> BASE_URL https://api.dev.wbdevel.net
+
 ALFA is a payment provider of Belarus AlfaBank. To use it, client need to bind their card
 
 ### Available currencies:
@@ -544,7 +546,7 @@ If the card status is ENABLED, the id field value can be used for the exchange o
       <td style="word-break: break-word; white-space: normal;">destination</td>
       <td>string</td>
       <td>No</td>
-      <td>Optional flow destination filter. Recommended value: EXCHANGE or SDK_EXCHANGE.</td>
+      <td>Optional flow destination filter. Recommended value: EXCHANGE</td>
     </tr>
   </tbody>
 </table>

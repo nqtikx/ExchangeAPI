@@ -1,5 +1,7 @@
 # CARUSELL
 
+> BASE_URL https://api.dev.wbdevel.net
+
 CARUSELL is a payment provider for СБП (Faster Payments System). The payment provider does not require card to be bound, payment is made in the bank's app through which the payment will be processed. Whitebird's connection with the client's bank is via a phone number. A phone number is required to make a payment
 
 ### Available currencies:
@@ -200,7 +202,7 @@ Create an order specifying returnUrl and failUrl to ensure the client is redirec
   <tbody><tr><td style="word-break: break-word; white-space: normal;">x-api-key</td><td>string</td><td>Yes</td><td>Authenticates the merchant server-to-server request.</td></tr></tbody>
 </table>
 
-**Request**
+**Parameters**
 
 <table width="100%">
   <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
@@ -353,7 +355,7 @@ Get the list of available banks for transfers via **CARUSELL**
   <tbody><tr><td style="word-break: break-word; white-space: normal;">x-api-key</td><td>string</td><td>Yes</td><td>Header shown in example; endpoint is external CARUSELL service.</td></tr></tbody>
 </table>
 
-**Request**
+**Parameters**
 
 <table width="100%">
   <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
@@ -402,7 +404,7 @@ Create an order with the bankIdentifier selected by the client
   <tbody><tr><td style="word-break: break-word; white-space: normal;">x-api-key</td><td>string</td><td>Yes</td><td>Authenticates the merchant server-to-server request.</td></tr></tbody>
 </table>
 
-**Request**
+**Parameters**
 
 <table width="100%">
   <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
