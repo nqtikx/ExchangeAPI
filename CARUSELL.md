@@ -61,7 +61,7 @@ Get available payment methods for the client
 <table width="100%">
   <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
   <tbody>
-    <tr><td style="word-break: break-word; white-space: normal;">clientId</td><td>string (UUID)</td><td>Yes</td><td>Client identifier.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">clientId</td><td>string (UUID)</td><td>No</td><td>Client identifier used to scope request to a specific client.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">fiatAsset</td><td>string</td><td>No</td><td>Optional fiat filter (RUB for CARUSELL flows).</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">orderType</td><td>string</td><td>No</td><td>Order direction filter (BUY/SELL).</td></tr>
   </tbody>
@@ -145,7 +145,7 @@ To create a quota, specify a random uuid in the paymentMethodToken field
 <table width="100%">
   <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
   <tbody>
-    <tr><td style="word-break: break-word; white-space: normal;">clientId</td><td>string (UUID)</td><td>Yes</td><td>Client identifier.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">clientId</td><td>string (UUID)</td><td>No</td><td>Client identifier used to scope request to a specific client.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">fromAsset / toAsset</td><td>object</td><td>Yes</td><td>Input/output asset pair for quote calculation.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">paymentMethod</td><td>string</td><td>No</td><td>Optional provider type (CARUSELL for this route).</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">paymentMethodToken</td><td>string</td><td>No</td><td>Optional provider token/reference for selected payment route.</td></tr>

@@ -63,9 +63,10 @@ If `CORTI_MILLI` is not returned (or returned with non-`ENABLED` status), `SELL`
 <table width="100%">
   <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
   <tbody>
-    <tr><td style="word-break: break-word; white-space: normal;">clientId</td><td>string (UUID)</td><td>Yes</td><td>Client identifier.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">clientId</td><td>string (UUID)</td><td>No</td><td>Client identifier used to scope the request to a specific client.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">fiatAsset</td><td>string</td><td>No</td><td>Optional fiat filter (RUB).</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">orderType</td><td>string</td><td>No</td><td>Optional direction filter (SELL).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">destination</td><td>string</td><td>No</td><td>Optional flow destination filter. Recommended value: EXCHANGE</td></tr>
   </tbody>
 </table>
 
@@ -74,10 +75,18 @@ If `CORTI_MILLI` is not returned (or returned with non-`ENABLED` status), `SELL`
 <table width="100%">
   <thead><tr><th width="240" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="640">Description</th></tr></thead>
   <tbody>
+    <tr><td style="word-break: break-word; white-space: normal;">id</td><td>string | null</td><td>Payment method token. For provider-level routes may be null.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">number</td><td>string | null</td><td>Masked card/account number when available.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">brand</td><td>string | null</td><td>Card/payment brand when available.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">providerId</td><td>string</td><td>Provider identifier (CORTI_MILLI).</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">providerType</td><td>string</td><td>Provider type.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Availability status (use ENABLED).</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">name</td><td>string</td><td>Provider display name.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">name</td><td>string | null</td><td>Legacy provider display field (deprecated in API model, may be absent).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">isRestricted</td><td>boolean | null</td><td>Shows whether this payment method is restricted.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">isCrypto</td><td>boolean | null</td><td>Indicates whether payment method is crypto type.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">country</td><td>string | null</td><td>Country associated with payment method.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">currency</td><td>string | null</td><td>Primary currency associated with payment method when provided.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">supportedCurrencies</td><td>array of strings | null</td><td>List of supported currencies when provided.</td></tr>
   </tbody>
 </table>
 
@@ -147,7 +156,7 @@ Create a quote for the selected CORTI\_MILLI payment method
 <table width="100%">
   <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
   <tbody>
-    <tr><td style="word-break: break-word; white-space: normal;">clientId</td><td>string (UUID)</td><td>Yes</td><td>Client identifier.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">clientId</td><td>string (UUID)</td><td>No</td><td>Client identifier used to scope the request to a specific client.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">fromAsset / toAsset</td><td>object</td><td>Yes</td><td>Input/output asset pair for quote calculation.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">paymentMethod</td><td>string</td><td>No</td><td>Optional provider type (CORTI_MILLI for this route).</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">paymentMethodToken</td><td>string</td><td>No</td><td>Optional provider token/reference for selected payout route.</td></tr>
@@ -225,6 +234,9 @@ Create a sell order using the created quote.
     <tr><td style="word-break: break-word; white-space: normal;">type</td><td>string</td><td>Order type (SELL).</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Current order status.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">depositCryptoAddress</td><td>string</td><td>Address where client should send crypto.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">creationDate</td><td>string</td><td>Order creation timestamp in server date-time format.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">modificationDate</td><td>string</td><td>Last order update timestamp in server date-time format.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">cryptoTransaction</td><td>object | null</td><td>Crypto transaction summary object (hash only when present).</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">expiresAtDate</td><td>string | null</td><td>Order expiration timestamp.</td></tr>
   </tbody>
 </table>
@@ -328,10 +340,38 @@ Get order details and provide transfer instructions to the client.
   <thead><tr><th width="240" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="640">Description</th></tr></thead>
   <tbody>
     <tr><td style="word-break: break-word; white-space: normal;">id</td><td>string</td><td>Order identifier.</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Current order status.</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">exchangeOperation</td><td>object</td><td>Exchange operation details for this order.</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">cryptoTransaction</td><td>object</td><td>Crypto leg details including addresses and status.</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">fiatTransaction</td><td>object</td><td>Fiat leg details including provider and payout status.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">type</td><td>string</td><td>Order type.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Current order lifecycle state.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">number</td><td>number</td><td>Sequential order number displayed for business/payment reference.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">exchangeOperation</td><td>object</td><td>Exchange side details (input/output, rates, fees).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">exchangeOperation.inputCurrency</td><td>string</td><td>Input currency code.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">exchangeOperation.inputAsset</td><td>number</td><td>Input amount.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">exchangeOperation.outputCurrency</td><td>string</td><td>Output currency code.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">exchangeOperation.outputAsset</td><td>number</td><td>Output amount.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">exchangeOperation.exchangeFeeAssetInFiat</td><td>number | null</td><td>Exchange fee amount in fiat.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">exchangeOperation.bonusOutputAsset</td><td>number | null</td><td>Bonus output amount when applicable.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">exchangeOperation.plainRatio</td><td>number</td><td>Base market ratio before route adjustments.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">exchangeOperation.ratio</td><td>number</td><td>Final route ratio applied to order.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">exchangeOperation.currencyPair</td><td>object</td><td>Pair of from/to currencies for conversion.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">cryptoTransaction</td><td>object</td><td>Crypto transfer details (addresses, hash, status, fee, type, comment).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">fiatTransaction</td><td>object</td><td>Fiat processing details (provider, status, payment metadata).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">fiatTransaction.orderIdentity</td><td>string | null</td><td>Provider-side order/payment reference when available.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">client</td><td>object</td><td>Order owner details.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">client.clientId</td><td>string</td><td>Client identifier associated with the order.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">serverDate</td><td>string</td><td>Server timestamp for response generation.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">exchangeType</td><td>string</td><td>Exchange direction type.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">operationType</td><td>string</td><td>Operation type (FIAT_TO_CRYPTO / CRYPTO_TO_FIAT).</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">orderType</td><td>string</td><td>Business order subtype.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">creationDate</td><td>string</td><td>Order creation timestamp in server date-time format.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">modificationDate</td><td>string</td><td>Last order update timestamp in server date-time format.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">completionDate</td><td>string | null</td><td>Completion timestamp for finalized orders.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">resultMessage</td><td>string | null</td><td>Result or error message from order processing.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">submitByResident</td><td>boolean | null</td><td>Resident submission flag when applicable.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">merchantName</td><td>string | null</td><td>Merchant display name.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">merchantBonus</td><td>number | null</td><td>Merchant bonus amount applied to order.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">promoCodeDetails</td><td>string | null</td><td>Promocode details when used.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">fromSource</td><td>string | null</td><td>Source type of input side.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">toSource</td><td>string | null</td><td>Source type of output side.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">expiresAtDate</td><td>string | null</td><td>Order expiration timestamp.</td></tr>
   </tbody>
 </table>

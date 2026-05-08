@@ -135,7 +135,7 @@ It is sufficient to verify that the payment provider is available via the id fie
     <tr>
       <td style="word-break: break-word; white-space: normal;">clientId</td>
       <td>string (UUID)</td>
-      <td>Yes</td>
+      <td>No</td>
       <td>Client identifier used to scope the request to a specific client.</td>
     </tr>
     <tr>
@@ -149,6 +149,12 @@ It is sufficient to verify that the payment provider is available via the id fie
       <td>string</td>
       <td>No</td>
       <td>Optional order direction filter. Allowed values: BUY, SELL.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">destination</td>
+      <td>string</td>
+      <td>No</td>
+      <td>Optional flow destination filter. Recommended value: EXCHANGE.</td>
     </tr>
   </tbody>
 </table>
@@ -231,17 +237,17 @@ It is sufficient to verify that the payment provider is available via the id fie
     </tr>
     <tr>
       <td style="word-break: break-word; white-space: normal;">commissions[].bank</td>
-      <td>string</td>
+      <td>string | null</td>
       <td>Bank group key for commission row.</td>
     </tr>
     <tr>
       <td style="word-break: break-word; white-space: normal;">commissions[].buyCommission</td>
-      <td>string</td>
+      <td>string | null</td>
       <td>Commission value/range for buy direction.</td>
     </tr>
     <tr>
       <td style="word-break: break-word; white-space: normal;">commissions[].sellCommission</td>
-      <td>string</td>
+      <td>string | null</td>
       <td>Commission value/range for sell direction.</td>
     </tr>
   </tbody>
@@ -291,7 +297,7 @@ Generate link to bind client card
     <tr>
       <td style="word-break: break-word; white-space: normal;">x-api-key</td>
       <td>string</td>
-      <td>Yes</td>
+      <td>No</td>
       <td>Authenticates the merchant server-to-server request. Use the API key issued for the merchant and target environment.</td>
     </tr>
   </tbody>
@@ -318,7 +324,7 @@ Generate link to bind client card
     <tr>
       <td style="word-break: break-word; white-space: normal;">providerType</td>
       <td>string</td>
-      <td>Yes</td>
+      <td>No</td>
       <td>Payment provider type. For this flow expected value is ASSIST.</td>
     </tr>
     <tr>
@@ -500,7 +506,7 @@ If the card status is ENABLED, the id field value can be used for the exchange o
     <tr>
       <td style="word-break: break-word; white-space: normal;">clientId</td>
       <td>string (UUID)</td>
-      <td>Yes</td>
+      <td>No</td>
       <td>Client identifier used to scope the request to a specific client.</td>
     </tr>
     <tr>
@@ -514,6 +520,12 @@ If the card status is ENABLED, the id field value can be used for the exchange o
       <td>string</td>
       <td>No</td>
       <td>Optional order direction filter. Allowed values: BUY, SELL.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">destination</td>
+      <td>string</td>
+      <td>No</td>
+      <td>Optional flow destination filter. Recommended value: EXCHANGE.</td>
     </tr>
   </tbody>
 </table>
@@ -573,6 +585,21 @@ If the card status is ENABLED, the id field value can be used for the exchange o
       <td style="word-break: break-word; white-space: normal;">country</td>
       <td>string</td>
       <td>Country associated with payment method.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">currency</td>
+      <td>string | null</td>
+      <td>Primary currency associated with payment method when provided.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">supportedCurrencies</td>
+      <td>array of strings | null</td>
+      <td>List of currencies supported by this payment method when provided.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">name</td>
+      <td>string | null</td>
+      <td>Legacy provider display field (deprecated in API model, may be absent).</td>
     </tr>
   </tbody>
 </table>
