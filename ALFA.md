@@ -175,7 +175,7 @@ It is sufficient to verify that the payment provider is available via the id fie
       <td style="word-break: break-word; white-space: normal;">destination</td>
       <td>string</td>
       <td>No</td>
-      <td>Optional flow destination filter. Recommended value: EXCHANGE or SDK_EXCHANGE.</td>
+      <td>Optional flow destination filter. Recommended value: EXCHANGE.</td>
     </tr>
   </tbody>
 </table>
