@@ -109,6 +109,35 @@ It is sufficient to verify that the payment provider is available via the id fie
   </tbody>
 </table>
 
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CLIENT_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Provided clientId is invalid or not linked to merchant.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation.</td>
+    </tr>
+  </tbody>
+</table>
+
 ### Second step
 
 Generate link to bind client card
@@ -161,6 +190,40 @@ Generate link to bind client card
 <table width="100%">
   <thead><tr><th width="240" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="640">Description</th></tr></thead>
   <tbody><tr><td style="word-break: break-word; white-space: normal;">url</td><td>string</td><td>Provider URL that must be opened by client to complete card binding.</td></tr></tbody>
+</table>
+
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CLIENT_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Provided clientId is invalid or not linked to merchant.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CARD_BINDING_FORBIDDEN</td>
+      <td>BUSINESS</td>
+      <td>Card binding is disabled for this provider on the merchant (provider not configured for merchant, or addPaymentMethod is false).</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">429 Too Many Requests</td>
+      <td>HTTP</td>
+      <td>Rate limit exceeded for this API key (command and/or total limits).</td>
+    </tr>
+  </tbody>
 </table>
 
 ## Third step
@@ -332,6 +395,35 @@ Verify that the payment provider is available
   </tbody>
 </table>
 
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CLIENT_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Provided clientId is invalid or not linked to merchant.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation.</td>
+    </tr>
+  </tbody>
+</table>
+
 ### Second step
 
 #### POST api/v2/exchange/merchant/limit
@@ -393,6 +485,45 @@ Verify that the payment provider is available
     <tr><td style="word-break: break-word; white-space: normal;">asset.network</td><td>string | null</td><td>Asset network for crypto assets.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">min</td><td>number</td><td>Minimum allowed amount.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">max</td><td>number</td><td>Maximum allowed amount.</td></tr>
+  </tbody>
+</table>
+
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CURRENCY_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Invalid fromAsset/toAsset pair.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CLIENT_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Client id is invalid or not linked to the merchant.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 Bad Request</td>
+      <td>HTTP</td>
+      <td>Request validation failed for one or more fields.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation or client scope.</td>
+    </tr>
   </tbody>
 </table>
 
@@ -486,6 +617,50 @@ Verify that the payment provider is available
   </tbody>
 </table>
 
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 INVALID_QUOTE</td>
+      <td>BUSINESS</td>
+      <td>Quote cannot be calculated for provided values.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CURRENCY_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Invalid asset or network.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CLIENT_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Client id is invalid or not linked to the merchant.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 Bad Request</td>
+      <td>HTTP</td>
+      <td>Request validation failed for one or more fields.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation or client scope.</td>
+    </tr>
+  </tbody>
+</table>
+
 ### Fourth step
 
 Create an order specifying `returnUrl` and `failUrl` (optional) after quote creation
@@ -540,6 +715,45 @@ Create an order specifying `returnUrl` and `failUrl` (optional) after quote crea
     <tr><td style="word-break: break-word; white-space: normal;">modificationDate</td><td>string</td><td>Last order update timestamp in server date-time format.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">cryptoTransaction</td><td>object | null</td><td>Crypto transaction summary object (hash only when present).</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">expiresAtDate</td><td>string | null</td><td>Order expiration timestamp.</td></tr>
+  </tbody>
+</table>
+
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 QUOTE_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Quote does not exist or already expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 INVALID_QUOTE</td>
+      <td>BUSINESS</td>
+      <td>Quote cannot be calculated or cannot be used for order creation.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 AML_FRAUD_VALIDATION_ERROR</td>
+      <td>BUSINESS</td>
+      <td>AML/fraud checks blocked order creation.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation or client scope.</td>
+    </tr>
   </tbody>
 </table>
 
@@ -699,6 +913,35 @@ This value is the payment reference number that the user enters in the bank app 
     <tr><td style="word-break: break-word; white-space: normal;">fromSource</td><td>string | null</td><td>Source type of input side.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">toSource</td><td>string | null</td><td>Source type of output side.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">expiresAtDate</td><td>string | null</td><td>Order expiration timestamp.</td></tr>
+  </tbody>
+</table>
+
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">404 ORDER_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Order not found or not accessible in merchant scope.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation or client scope.</td>
+    </tr>
   </tbody>
 </table>
 

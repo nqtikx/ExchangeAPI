@@ -92,6 +92,64 @@ If `VTB` is not returned (or returned with non-`ENABLED` status), `SELL` via `VT
   </tbody>
 </table>
 
+**Payment method status values**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="220" style="word-break: break-word; white-space: normal;">Status</th>
+      <th width="680">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">ENABLED</td>
+      <td>Payment method can be used for the selected flow, direction, and currency.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">DIRECTION_DISABLED</td>
+      <td>Payment method exists, but is not available for selected orderType.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">CURRENCY_DISABLED</td>
+      <td>Payment method exists, but does not support selected fiatAsset.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">UNKNOWN</td>
+      <td>Status cannot be resolved because required filters were not provided.</td>
+    </tr>
+  </tbody>
+</table>
+
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CLIENT_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Provided clientId is invalid or not linked to merchant.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation.</td>
+    </tr>
+  </tbody>
+</table>
+
 ### Second step
 
 Create a quote for the selected VTB payment method
@@ -183,6 +241,50 @@ Create a quote for the selected VTB payment method
   </tbody>
 </table>
 
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 INVALID_QUOTE</td>
+      <td>BUSINESS</td>
+      <td>Quote cannot be calculated for provided values.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CURRENCY_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Invalid asset or network.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CLIENT_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Client id is invalid or not linked to the merchant.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 Bad Request</td>
+      <td>HTTP</td>
+      <td>Request validation failed for one or more fields.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation or client scope.</td>
+    </tr>
+  </tbody>
+</table>
+
 ### Third step
 
 Create a sell order using the created quote.
@@ -239,6 +341,45 @@ Create a sell order using the created quote.
     <tr><td style="word-break: break-word; white-space: normal;">modificationDate</td><td>string</td><td>Last order update timestamp in server date-time format.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">cryptoTransaction</td><td>object | null</td><td>Crypto transaction summary object (hash only when present).</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">expiresAtDate</td><td>string | null</td><td>Order expiration timestamp.</td></tr>
+  </tbody>
+</table>
+
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 QUOTE_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Blockchain address that must be shown to the client as the destination for crypto deposit.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 INVALID_QUOTE</td>
+      <td>BUSINESS</td>
+      <td>Quote cannot be calculated or cannot be used for order creation.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 AML_FRAUD_VALIDATION_ERROR</td>
+      <td>BUSINESS</td>
+      <td>AML/fraud checks blocked order creation.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation or client scope.</td>
+    </tr>
   </tbody>
 </table>
 
@@ -374,6 +515,35 @@ Get order details and provide transfer instructions to the client.
     <tr><td style="word-break: break-word; white-space: normal;">fromSource</td><td>string | null</td><td>Source type of input side.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">toSource</td><td>string | null</td><td>Source type of output side.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">expiresAtDate</td><td>string | null</td><td>Order expiration timestamp.</td></tr>
+  </tbody>
+</table>
+
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">404 ORDER_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Order not found or not accessible in merchant scope.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation or client scope.</td>
+    </tr>
   </tbody>
 </table>
 

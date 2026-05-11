@@ -81,6 +81,64 @@ Get available payment methods for the client
   </tbody>
 </table>
 
+**Payment method status values**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="220" style="word-break: break-word; white-space: normal;">Status</th>
+      <th width="680">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">ENABLED</td>
+      <td>Payment method can be used for the selected flow, direction, and currency.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">DIRECTION_DISABLED</td>
+      <td>Payment method exists, but is not available for selected orderType.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">CURRENCY_DISABLED</td>
+      <td>Payment method exists, but does not support selected fiatAsset.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">UNKNOWN</td>
+      <td>Status cannot be resolved because required filters were not provided.</td>
+    </tr>
+  </tbody>
+</table>
+
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CLIENT_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Provided clientId is invalid or not linked to merchant.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation.</td>
+    </tr>
+  </tbody>
+</table>
+
 ### Second step
 
 To create a quota, specify a random uuid in the paymentMethodToken field
@@ -173,6 +231,50 @@ To create a quota, specify a random uuid in the paymentMethodToken field
   </tbody>
 </table>
 
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 INVALID_QUOTE</td>
+      <td>BUSINESS</td>
+      <td>Quote cannot be calculated for provided values.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CURRENCY_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Invalid asset or network.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CLIENT_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Client id is invalid or not linked to the merchant.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 Bad Request</td>
+      <td>HTTP</td>
+      <td>Request validation failed for one or more fields.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation or client scope.</td>
+    </tr>
+  </tbody>
+</table>
+
 ### Third step
 
 Create an order specifying returnUrl and failUrl to ensure the client is redirected back to the website after payment
@@ -228,6 +330,45 @@ Create an order specifying returnUrl and failUrl to ensure the client is redirec
     <tr><td style="word-break: break-word; white-space: normal;">modificationDate</td><td>string</td><td>Last order update timestamp in server date-time format.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">cryptoTransaction</td><td>object | null</td><td>Crypto transaction summary object (hash only when present).</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">expiresAtDate</td><td>string | null</td><td>Order expiration timestamp.</td></tr>
+  </tbody>
+</table>
+
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 QUOTE_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Quote does not exist or already expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 INVALID_QUOTE</td>
+      <td>BUSINESS</td>
+      <td>Quote cannot be calculated or cannot be used for order creation.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 AML_FRAUD_VALIDATION_ERROR</td>
+      <td>BUSINESS</td>
+      <td>AML/fraud checks blocked order creation.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation or client scope.</td>
+    </tr>
   </tbody>
 </table>
 
@@ -296,6 +437,64 @@ Get available payment methods for the client
     <tr><td style="word-break: break-word; white-space: normal;">providerType</td><td>string</td><td>Provider category/type returned by provider integration. Usually matches providerId for standard routes.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Payment method status: CURRENCY_DISABLED, DIRECTION_DISABLED, ENABLED, UNKNOWN.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">name</td><td>string</td><td>Provider display name.</td></tr>
+  </tbody>
+</table>
+
+**Payment method status values**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="220" style="word-break: break-word; white-space: normal;">Status</th>
+      <th width="680">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">ENABLED</td>
+      <td>Payment method can be used for the selected flow, direction, and currency.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">DIRECTION_DISABLED</td>
+      <td>Payment method exists, but is not available for selected orderType.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">CURRENCY_DISABLED</td>
+      <td>Payment method exists, but does not support selected fiatAsset.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">UNKNOWN</td>
+      <td>Status cannot be resolved because required filters were not provided.</td>
+    </tr>
+  </tbody>
+</table>
+
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CLIENT_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Provided clientId is invalid or not linked to merchant.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation.</td>
+    </tr>
   </tbody>
 </table>
 
@@ -391,6 +590,50 @@ To create a quota, specify a random uuid in the paymentMethodToken field
   </tbody>
 </table>
 
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 INVALID_QUOTE</td>
+      <td>BUSINESS</td>
+      <td>Quote cannot be calculated for provided values.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CURRENCY_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Invalid asset or network.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CLIENT_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Client id is invalid or not linked to the merchant.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 Bad Request</td>
+      <td>HTTP</td>
+      <td>Request validation failed for one or more fields.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation or client scope.</td>
+    </tr>
+  </tbody>
+</table>
+
 ### Third step
 
 Get the list of available banks for transfers via **CARUSELL**
@@ -447,7 +690,7 @@ The client chooses the bank to which the payment will be made
 
 Create an order with the bankIdentifier selected by the client
 
-#### GET /api/v2/exchange/merchant/sell?quoteId=27690c04-e344-4d31-81ae-c58296ba6ddc\&bankIdentifier=100000000118
+#### GET api/v2/exchange/merchant/sell?quoteId=27690c04-e344-4d31-81ae-c58296ba6ddc\&bankIdentifier=100000000118
 
 **Headers**
 - `x-api-key: {{x-api-key}}`
@@ -497,6 +740,45 @@ Create an order with the bankIdentifier selected by the client
     <tr><td style="word-break: break-word; white-space: normal;">modificationDate</td><td>string</td><td>Last order update timestamp in server date-time format.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">cryptoTransaction</td><td>object | null</td><td>Crypto transaction summary object (hash only when present).</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">expiresAtDate</td><td>string | null</td><td>Order expiration timestamp.</td></tr>
+  </tbody>
+</table>
+
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 QUOTE_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Blockchain address that must be shown to the client as the destination for crypto deposit.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 INVALID_QUOTE</td>
+      <td>BUSINESS</td>
+      <td>Quote cannot be calculated or cannot be used for order creation.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 AML_FRAUD_VALIDATION_ERROR</td>
+      <td>BUSINESS</td>
+      <td>AML/fraud checks blocked order creation.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation or client scope.</td>
+    </tr>
   </tbody>
 </table>
 

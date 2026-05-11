@@ -71,7 +71,7 @@ It is sufficient to verify that the payment provider is available via the `id` f
 
 <table width="100%">
   <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
-  <tbody><tr><td style="word-break: break-word; white-space: normal;">x-api-key</td><td>string</td><td>Yes</td><td>Authenticates the merchant server-to-server request.</td></tr></tbody>
+  <tbody><tr><td style="word-break: break-word; white-space: normal;">x-api-key</td><td>string</td><td>Yes</td><td>Authenticates the merchant server-to-server request. Use the API key issued for the merchant and target environment.</td></tr></tbody>
 </table>
 
 **Request**
@@ -94,11 +94,42 @@ It is sufficient to verify that the payment provider is available via the `id` f
     <tr><td style="word-break: break-word; white-space: normal;">id</td><td>string</td><td>Provider identifier. For this flow expected value is SBER.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">name</td><td>string</td><td>Provider display name.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">addPaymentMethod</td><td>boolean</td><td>Defines whether provider supports adding payment methods.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">config</td><td>object</td><td>Provider routing configuration.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">config.paymentSystems</td><td>array of objects</td><td>Payment systems list for provider.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">config.paymentSystems[].paymentSystem</td><td>string | null</td><td>Payment system for selected route.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">config.paymentSystems[].type</td><td>string</td><td>Provider channel type.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">config.paymentSystems[].directions[].direction</td><td>string</td><td>Direction for route (BUY/SELL).</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">config.paymentSystems[].directions[].currencies[].currency</td><td>string</td><td>Supported fiat currency.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">config.paymentSystems[].directions[].currencies[].banks</td><td>array of strings</td><td>Supported banks list for selected route.</td></tr>
+  </tbody>
+</table>
+
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CLIENT_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Provided clientId is invalid or not linked to merchant.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation or client scope.</td>
+    </tr>
   </tbody>
 </table>
 
@@ -143,7 +174,7 @@ If `SBER` is not returned (or returned with non-`ENABLED` status), `BUY` via `SB
 
 <table width="100%">
   <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
-  <tbody><tr><td style="word-break: break-word; white-space: normal;">x-api-key</td><td>string</td><td>Yes</td><td>Authenticates the merchant server-to-server request.</td></tr></tbody>
+  <tbody><tr><td style="word-break: break-word; white-space: normal;">x-api-key</td><td>string</td><td>Yes</td><td>Authenticates the merchant server-to-server request. Use the API key issued for the merchant and target environment.</td></tr></tbody>
 </table>
 
 **Request**
@@ -171,10 +202,68 @@ If `SBER` is not returned (or returned with non-`ENABLED` status), `BUY` via `SB
     <tr><td style="word-break: break-word; white-space: normal;">status</td><td>string</td><td>Availability status: CURRENCY_DISABLED, DIRECTION_DISABLED, ENABLED, UNKNOWN.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">name</td><td>string | null</td><td>Provider display name shown to user in payment method lists.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">isRestricted</td><td>boolean | null</td><td>Shows whether this payment method is restricted.</td></tr>
-    <tr><td style="word-break: break-word; white-space: normal;">isCrypto</td><td>boolean | null</td><td>Indicates whether payment method is crypto type.</td></tr>
+    <tr><td style="word-break: break-word; white-space: normal;">isCrypto</td><td>boolean | null</td><td>Indicates whether the payment method is crypto type.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">country</td><td>string | null</td><td>Country associated with payment method.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">currency</td><td>string | null</td><td>Primary currency associated with payment method when provided.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">supportedCurrencies</td><td>array of strings | null</td><td>List of supported currencies when provided.</td></tr>
+  </tbody>
+</table>
+
+**Payment method status values**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="220" style="word-break: break-word; white-space: normal;">Status</th>
+      <th width="680">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">ENABLED</td>
+      <td>Payment method can be used for the selected flow, direction, and currency.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">DIRECTION_DISABLED</td>
+      <td>Payment method exists, but is not available for selected orderType.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">CURRENCY_DISABLED</td>
+      <td>Payment method exists, but does not support selected fiatAsset.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">UNKNOWN</td>
+      <td>Status cannot be resolved because required filters were not provided.</td>
+    </tr>
+  </tbody>
+</table>
+
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CLIENT_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Provided clientId is invalid or not linked to merchant.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation or client scope.</td>
+    </tr>
   </tbody>
 </table>
 
@@ -220,7 +309,7 @@ Create a deposit for the selected SBER payment method
 
 <table width="100%">
   <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
-  <tbody><tr><td style="word-break: break-word; white-space: normal;">x-api-key</td><td>string</td><td>Yes</td><td>Authenticates the merchant server-to-server request.</td></tr></tbody>
+  <tbody><tr><td style="word-break: break-word; white-space: normal;">x-api-key</td><td>string</td><td>Yes</td><td>Authenticates the merchant server-to-server request. Use the API key issued for the merchant and target environment.</td></tr></tbody>
 </table>
 
 **Request**
@@ -253,6 +342,40 @@ Create a deposit for the selected SBER payment method
     <tr><td style="word-break: break-word; white-space: normal;">expirationMinutes</td><td>number</td><td>Time to complete payment before expiration.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">paymentDetails.paymentLink</td><td>string | null</td><td>Payment link for provider flow when available.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">paymentDetails.notificationPhoneNumber</td><td>string | null</td><td>Phone number where push notification is sent for payment confirmation.</td></tr>
+  </tbody>
+</table>
+
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="266" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="614">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 INVALID_PAYMENT_TOKEN</td>
+      <td>BUSINESS</td>
+      <td>Payment token is invalid, unavailable, or unsupported.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CLIENT_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Client id is invalid or not linked to merchant.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation.</td>
+    </tr>
   </tbody>
 </table>
 
@@ -321,7 +444,7 @@ Check current fiat operation status for this client.
 
 <table width="100%">
   <thead><tr><th width="200" style="word-break: break-word; white-space: normal;">Name</th><th width="120">Type</th><th width="100">Required</th><th width="580">Description</th></tr></thead>
-  <tbody><tr><td style="word-break: break-word; white-space: normal;">x-api-key</td><td>string</td><td>Yes</td><td>Authenticates the merchant server-to-server request.</td></tr></tbody>
+  <tbody><tr><td style="word-break: break-word; white-space: normal;">x-api-key</td><td>string</td><td>Yes</td><td>Authenticates the merchant server-to-server request. Use the API key issued for the merchant and target environment.</td></tr></tbody>
 </table>
 
 **Parameters**
@@ -379,5 +502,34 @@ Check current fiat operation status for this client.
     <tr><td style="word-break: break-word; white-space: normal;">content[].creationDate</td><td>string</td><td>Operation creation timestamp.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">content[].completionDate</td><td>string | null</td><td>Operation completion timestamp.</td></tr>
     <tr><td style="word-break: break-word; white-space: normal;">pageable / totalElements / totalPages / size / number</td><td>object + numbers</td><td>Standard Spring Page metadata.</td></tr>
+  </tbody>
+</table>
+
+**Errors**
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="240" style="word-break: break-word; white-space: normal;">Name</th>
+      <th width="120">Code</th>
+      <th width="640">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">400 CLIENT_NOT_FOUND</td>
+      <td>BUSINESS</td>
+      <td>Provided clientId is invalid or not linked to merchant.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">401 Unauthorized</td>
+      <td>HTTP</td>
+      <td>x-api-key is missing, invalid, or expired.</td>
+    </tr>
+    <tr>
+      <td style="word-break: break-word; white-space: normal;">403 Forbidden</td>
+      <td>HTTP</td>
+      <td>Merchant has no permission for this operation.</td>
+    </tr>
   </tbody>
 </table>
